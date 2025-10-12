@@ -1,9 +1,6 @@
 package com.uravgcode.modernessentials;
 
-import com.uravgcode.modernessentials.command.EnderChestCommand;
-import com.uravgcode.modernessentials.command.TimeCommand;
-import com.uravgcode.modernessentials.command.WeatherCommand;
-import com.uravgcode.modernessentials.command.WorkstationCommand;
+import com.uravgcode.modernessentials.command.*;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
@@ -21,6 +18,7 @@ public class ModernEssentialsBootstrap implements PluginBootstrap {
             var registrar = commands.registrar();
             WorkstationCommand.registerCommands(registrar);
             EnderChestCommand.registerCommands(registrar);
+            InventorySeeCommand.registerCommands(registrar);
             TimeCommand.registerCommands(registrar);
             WeatherCommand.registerCommands(registrar);
         });
