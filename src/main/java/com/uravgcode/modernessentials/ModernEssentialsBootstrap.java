@@ -21,6 +21,7 @@ public class ModernEssentialsBootstrap implements PluginBootstrap {
             InventorySeeCommand.registerCommands(registrar);
             TimeCommand.registerCommands(registrar);
             WeatherCommand.registerCommands(registrar);
+            GodCommand.registerCommands(registrar);
         });
     }
 
