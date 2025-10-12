@@ -2,6 +2,7 @@ package com.uravgcode.modernessentials;
 
 import com.uravgcode.modernessentials.command.EnderChestCommand;
 import com.uravgcode.modernessentials.command.TimeCommand;
+import com.uravgcode.modernessentials.command.WeatherCommand;
 import com.uravgcode.modernessentials.command.WorkstationCommand;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
@@ -19,8 +20,9 @@ public class ModernEssentialsBootstrap implements PluginBootstrap {
         context.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
             var registrar = commands.registrar();
             WorkstationCommand.registerCommands(registrar);
-            TimeCommand.registerCommands(registrar);
             EnderChestCommand.registerCommands(registrar);
+            TimeCommand.registerCommands(registrar);
+            WeatherCommand.registerCommands(registrar);
         });
     }
 
