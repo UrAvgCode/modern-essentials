@@ -7,13 +7,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ModernEssentials extends JavaPlugin {
 
+    private PingListener pingListener = null;
+
     @Override
     public void onEnable() {
         saveConfig();
 
+        pingListener = new PingListener(this);
+
         var pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new PingListener(this), this);
+        pluginManager.registerEvents(pingListener, this);
         pluginManager.registerEvents(new FlyListener(this), this);
         pluginManager.registerEvents(new GodListener(), this);
+    }
+
+    public void reload() {
+        reloadConfig();
+        pingListener.reload();
     }
 }

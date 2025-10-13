@@ -16,6 +16,7 @@ public class ModernEssentialsBootstrap implements PluginBootstrap {
     public void bootstrap(BootstrapContext context) {
         context.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
             var registrar = commands.registrar();
+            EssentialsCommand.registerCommands(registrar);
             WorkstationCommand.registerCommands(registrar);
             EnderChestCommand.registerCommands(registrar);
             InventorySeeCommand.registerCommands(registrar);
