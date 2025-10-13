@@ -1,0 +1,28 @@
+# =======================================
+# Modern Essentials Plugin Configuration
+# =======================================
+
+# =======================================
+# Server List Options
+# =======================================
+server-list:
+  # MOTDs displayed in the server list
+  motd:
+    - |
+      <gradient:#0956c6:#2a99fa><bold>Welcome to the Server</bold></gradient>
+      <#2fa2ff>Have fun and enjoy your stay
+    - |
+      <gradient:#d83a06:#ffb047><bold>Multiple MOTDs are available</bold></gradient>
+      <#ffbd50>One is chosen randomly on each refresh
+
+  # Maximum number of players shown in the server list
+  max-players: -1
+
+  # Fake the number of online players displayed
+  fake-players: -1
+
+  # Hide the online player count completely
+  hide-player-count: false
+
+  # Disable hover text showing online players when hovering the player count
+  disable-player-list-hover: false
