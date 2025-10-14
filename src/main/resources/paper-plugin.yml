@@ -8,3 +8,10 @@ api-version: '1.21'
 description: a modern essentials plugin
 website: 'https://uravgcode.com'
 authors: [ UrAvgCode ]
+
+dependencies:
+  server:
+    MiniPlaceholders:
+      load: BEFORE
+      required: false
+      join-classpath: true
