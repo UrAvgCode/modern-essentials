@@ -21,6 +21,7 @@ public final class ModernEssentials extends JavaPlugin {
         pluginManager.registerEvents(chatListener, this);
         pluginManager.registerEvents(new FlyListener(this), this);
         pluginManager.registerEvents(new GodListener(), this);
+        pluginManager.registerEvents(new VanishListener(this), this);
     }
 
     public void reload() {

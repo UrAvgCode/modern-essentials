@@ -24,6 +24,7 @@ public class ModernEssentialsBootstrap implements PluginBootstrap {
             WeatherCommand.registerCommands(registrar);
             GodCommand.registerCommands(registrar);
             FlyCommand.registerCommands(registrar);
+            VanishCommand.registerCommands(registrar);
         });
     }
 
