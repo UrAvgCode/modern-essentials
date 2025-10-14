@@ -1,8 +1,10 @@
 package com.uravgcode.modernessentials.listener;
 
 import com.destroystokyo.paper.event.server.PaperServerListPingEvent;
+import com.uravgcode.modernessentials.placeholder.Placeholders;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -43,8 +45,13 @@ public class PingListener implements Listener {
         final var config = plugin.getConfig().getConfigurationSection("server-list");
         if (config == null) return;
 
+        var minimessage = MiniMessage.builder().tags(TagResolver.resolver(
+            TagResolver.standard(),
+            Placeholders.globalPlaceholders()
+        )).build();
+
         final var motdStrings = config.getStringList("motd");
-        motds = motdStrings.stream().map(motd -> MiniMessage.miniMessage().deserialize(motd)).toList();
+        motds = motdStrings.stream().map(minimessage::deserialize).toList();
 
         maxPlayers = config.getInt("max-players", -1);
         fakePlayers = config.getInt("fake-players", -1);
