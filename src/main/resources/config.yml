@@ -39,3 +39,6 @@ tab-list:
 
   # How often the tab is refreshed in ticks
   refresh-interval: 20
+
+chat:
+  format: "<gray><player> <dark_gray>> <white><message>"
