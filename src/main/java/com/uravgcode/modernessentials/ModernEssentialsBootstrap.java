@@ -28,6 +28,7 @@ public class ModernEssentialsBootstrap implements PluginBootstrap {
             SpeedCommand.registerCommands(registrar);
             FlySpeedCommand.registerCommands(registrar);
             KickAllCommand.registerCommands(registrar);
+            RepairCommand.registerCommands(registrar);
         });
     }
 
