@@ -26,3 +26,16 @@ server-list:
 
   # Disable hover text showing online players when hovering the player count
   disable-player-list-hover: false
+
+tab-list:
+  header:
+    - ''
+    - '<gray>Ping: <#60afff><ping> <gray>| IP: <#60afff>example.com <gray>| Online: <#60afff><online>/<online_max>'
+    - ''
+  footer:
+    - ''
+    - "<gray>Server Time: <#60afff><time:'EEE, LLL dd yyyy'> <gray>| <#60afff><time:'HH:mm:ss'>"
+    - ''
+
+  # How often the tab is refreshed in ticks
+  refresh-interval: 20
