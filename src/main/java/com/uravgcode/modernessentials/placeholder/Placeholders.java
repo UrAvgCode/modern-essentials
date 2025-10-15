@@ -31,7 +31,7 @@ public final class Placeholders {
         audiencePlaceholder("displayname", Player::displayName),
         audiencePlaceholder("uuid", Player::getUniqueId),
         audiencePlaceholder("ping", Player::getPing),
-        audiencePlaceholder("health", Player::getHealth),
+        audiencePlaceholder("health", player -> Math.round(player.getHealth())),
         audiencePlaceholder("world", player -> player.getWorld().getName())
     );
 
