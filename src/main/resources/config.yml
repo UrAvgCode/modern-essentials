@@ -28,6 +28,10 @@ server-list:
   disable-player-list-hover: false
 
 tab-list:
+  # Format of each player's entry in the tab list
+  format: "<player> <red><health>❤"
+
+  # Header and footer displayed in the tab list
   header:
     - ''
     - '<gray>Ping: <#60afff><ping> <gray>| IP: <#60afff>example.com <gray>| Online: <#60afff><online>/<online_max>'
@@ -41,4 +45,5 @@ tab-list:
   refresh-interval: 20
 
 chat:
+  # Format of chat messages
   format: "<gray><player> <dark_gray>> <white><message>"

@@ -14,6 +14,7 @@ public class JoinListener implements Listener {
     private final JavaPlugin plugin;
 
     private MiniMessage minimessage = MiniMessage.miniMessage();
+    private String format = "<player>";
     private String headerString = "";
     private String footerString = "";
     private long refreshInterval = 20L;
@@ -27,8 +28,10 @@ public class JoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         final var player = event.getPlayer();
         player.getScheduler().runAtFixedRate(plugin, task -> {
+            var name = minimessage.deserialize(format, player);
             var header = minimessage.deserialize(headerString, player);
             var footer = minimessage.deserialize(footerString, player);
+            player.playerListName(name);
             player.sendPlayerListHeaderAndFooter(header, footer);
         }, null, 1L, refreshInterval);
     }
@@ -43,6 +46,7 @@ public class JoinListener implements Listener {
             Placeholders.audiencePlaceholders()
         )).build();
 
+        format = config.getString("format", "<player>");
         headerString = String.join("\n", config.getStringList("header"));
         footerString = String.join("\n", config.getStringList("footer"));
         refreshInterval = config.getLong("refresh-interval", 20L);
