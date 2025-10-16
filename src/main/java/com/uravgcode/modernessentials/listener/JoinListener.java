@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class JoinListener implements Listener {
     private final JavaPlugin plugin;
+    private final MiniMessage miniMessage;
 
-    private MiniMessage minimessage = MiniMessage.miniMessage();
     private String format = "<player>";
     private String headerString = "";
     private String footerString = "";
@@ -21,6 +21,11 @@ public class JoinListener implements Listener {
 
     public JoinListener(@NotNull JavaPlugin plugin) {
         this.plugin = plugin;
+        miniMessage = MiniMessage.builder().tags(TagResolver.resolver(
+            TagResolver.standard(),
+            Placeholders.globalPlaceholders(),
+            Placeholders.audiencePlaceholders()
+        )).build();
         reload();
     }
 
@@ -28,9 +33,9 @@ public class JoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         final var player = event.getPlayer();
         player.getScheduler().runAtFixedRate(plugin, task -> {
-            var name = minimessage.deserialize(format, player);
-            var header = minimessage.deserialize(headerString, player);
-            var footer = minimessage.deserialize(footerString, player);
+            var name = miniMessage.deserialize(format, player);
+            var header = miniMessage.deserialize(headerString, player);
+            var footer = miniMessage.deserialize(footerString, player);
             player.playerListName(name);
             player.sendPlayerListHeaderAndFooter(header, footer);
         }, null, 1L, refreshInterval);
@@ -39,12 +44,6 @@ public class JoinListener implements Listener {
     public void reload() {
         final var config = plugin.getConfig().getConfigurationSection("tab-list");
         if (config == null) return;
-
-        minimessage = MiniMessage.builder().tags(TagResolver.resolver(
-            TagResolver.standard(),
-            Placeholders.globalPlaceholders(),
-            Placeholders.audiencePlaceholders()
-        )).build();
 
         format = config.getString("format", "<player>");
         headerString = String.join("\n", config.getStringList("header"));

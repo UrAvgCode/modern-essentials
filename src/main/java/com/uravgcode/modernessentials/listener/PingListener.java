@@ -2,7 +2,6 @@ package com.uravgcode.modernessentials.listener;
 
 import com.destroystokyo.paper.event.server.PaperServerListPingEvent;
 import com.uravgcode.modernessentials.placeholder.Placeholders;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.event.EventHandler;
@@ -17,8 +16,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class PingListener implements Listener {
     private final JavaPlugin plugin;
+    private final MiniMessage miniMessage;
 
-    private List<Component> motds = Collections.emptyList();
+    private List<String> motds = Collections.emptyList();
     private int maxPlayers = -1;
     private int fakePlayers = -1;
     private boolean hidePlayerCount = false;
@@ -26,13 +26,20 @@ public class PingListener implements Listener {
 
     public PingListener(@NotNull JavaPlugin plugin) {
         this.plugin = plugin;
+        this.miniMessage = MiniMessage.builder().tags(TagResolver.resolver(
+            TagResolver.standard(),
+            Placeholders.globalPlaceholders()
+        )).build();
         reload();
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onServerListPing(PaperServerListPingEvent event) {
         if (!motds.isEmpty()) {
-            event.motd(motds.size() == 1 ? motds.getFirst() : motds.get(ThreadLocalRandom.current().nextInt(motds.size())));
+            var motd = motds.size() == 1
+                ? miniMessage.deserialize(motds.getFirst())
+                : miniMessage.deserialize(motds.get(ThreadLocalRandom.current().nextInt(motds.size())));
+            event.motd(motd);
         }
 
         if (maxPlayers >= 0) event.setMaxPlayers(maxPlayers);
@@ -45,14 +52,7 @@ public class PingListener implements Listener {
         final var config = plugin.getConfig().getConfigurationSection("server-list");
         if (config == null) return;
 
-        var minimessage = MiniMessage.builder().tags(TagResolver.resolver(
-            TagResolver.standard(),
-            Placeholders.globalPlaceholders()
-        )).build();
-
-        final var motdStrings = config.getStringList("motd");
-        motds = motdStrings.stream().map(minimessage::deserialize).toList();
-
+        motds = config.getStringList("motd");
         maxPlayers = config.getInt("max-players", -1);
         fakePlayers = config.getInt("fake-players", -1);
         hidePlayerCount = config.getBoolean("hide-player-count", false);

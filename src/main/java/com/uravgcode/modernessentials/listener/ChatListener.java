@@ -13,12 +13,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChatListener implements Listener {
     private final JavaPlugin plugin;
+    private final MiniMessage miniMessage;
 
-    private MiniMessage miniMessage = MiniMessage.miniMessage();
     private String format = "";
 
     public ChatListener(@NotNull JavaPlugin plugin) {
         this.plugin = plugin;
+        miniMessage = MiniMessage.builder().tags(TagResolver.resolver(
+            TagResolver.standard(),
+            Placeholders.globalPlaceholders(),
+            Placeholders.audiencePlaceholders()
+        )).build();
         reload();
     }
 
@@ -32,12 +37,6 @@ public class ChatListener implements Listener {
     public void reload() {
         final var config = plugin.getConfig().getConfigurationSection("chat");
         if (config == null) return;
-
-        miniMessage = MiniMessage.builder().tags(TagResolver.resolver(
-            TagResolver.standard(),
-            Placeholders.globalPlaceholders(),
-            Placeholders.audiencePlaceholders()
-        )).build();
 
         format = config.getString("format", "");
     }
