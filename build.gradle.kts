@@ -9,32 +9,26 @@ plugins {
 group = "com.uravgcode"
 version = "0.1.0"
 
-dependencies {
-    paperweight.paperDevBundle(libs.versions.paper.api)
-    compileOnly(libs.miniplaceholders)
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
 
 tasks {
+    withType<JavaCompile>().configureEach {
+        options.encoding = "UTF-8"
+        options.release.set(21)
+    }
+
     runServer {
         minecraftVersion("1.21.10")
     }
 }
 
-val targetJavaVersion = 21
-java {
-    val javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible) {
-        options.release.set(targetJavaVersion)
-    }
+dependencies {
+    paperweight.paperDevBundle(libs.versions.paper.api)
+    compileOnly(libs.miniplaceholders)
 }
 
 paperPluginYaml {
