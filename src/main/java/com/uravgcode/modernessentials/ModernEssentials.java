@@ -13,6 +13,7 @@ public final class ModernEssentials extends JavaPlugin {
     }
 
     public void reload() {
+        saveDefaultConfig();
         reloadConfig();
         ModuleRegistrar.reloadAll();
     }
