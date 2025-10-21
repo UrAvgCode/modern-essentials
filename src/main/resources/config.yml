@@ -54,3 +54,7 @@ join-quit:
 
   # Custom quit message
   quit-message: "<red>- <player> <gray>Disconnected"
+
+death-message:
+  # Format of death messages
+  format: "<gray>☠ <white><message>"
