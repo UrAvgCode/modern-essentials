@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.TagPattern;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.object.ObjectContents;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +33,8 @@ public final class Placeholders {
         audiencePlaceholder("uuid", Player::getUniqueId),
         audiencePlaceholder("ping", Player::getPing),
         audiencePlaceholder("health", player -> Math.round(player.getHealth())),
-        audiencePlaceholder("world", player -> player.getWorld().getName())
+        audiencePlaceholder("world", player -> player.getWorld().getName()),
+        audiencePlaceholder("player_head", player -> Component.object(ObjectContents.playerHead(player)))
     );
 
     public static TagResolver globalPlaceholders() {

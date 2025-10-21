@@ -46,7 +46,7 @@ tab-list:
 
 chat:
   # Format of chat messages
-  format: "<gray><player> <dark_gray>> <white><message>"
+  format: "<player_head> <gray><player> <dark_gray>> <white><message>"
 
 join-quit:
   # Custom join message
