@@ -22,12 +22,12 @@ public final class Placeholders {
         globalPlaceholder("online_max", () -> Component.text(Bukkit.getMaxPlayers())),
         TagResolver.resolver("time", (arguments, context) -> {
             final var format = arguments.popOr("format expected").value();
-            return Tag.inserting(context.deserialize(DateTimeFormatter.ofPattern(format).format(LocalDateTime.now())));
+            return Tag.selfClosingInserting(context.deserialize(DateTimeFormatter.ofPattern(format).format(LocalDateTime.now())));
         })
     );
 
     private static final TagResolver internalAudiencePlaceholders = TagResolver.resolver(
-        audiencePlaceholder("player", Player::getName),
+        audiencePlaceholder("player", Player::name),
         audiencePlaceholder("displayname", Player::displayName),
         audiencePlaceholder("uuid", Player::getUniqueId),
         audiencePlaceholder("ping", Player::getPing),
@@ -58,7 +58,7 @@ public final class Placeholders {
     }
 
     private static TagResolver globalPlaceholder(@TagPattern @NotNull String name, @NotNull Supplier<Component> supplier) {
-        return TagResolver.resolver(name, (arguments, context) -> Tag.inserting(supplier.get()));
+        return TagResolver.resolver(name, (arguments, context) -> Tag.selfClosingInserting(supplier.get()));
     }
 
     private static TagResolver audiencePlaceholder(@TagPattern @NotNull String name, @NotNull Function<Player, ?> handler) {
@@ -68,7 +68,7 @@ public final class Placeholders {
             final var content = result instanceof Component component
                 ? component
                 : Component.text(String.valueOf(result));
-            return Tag.inserting(content);
+            return Tag.selfClosingInserting(content);
         });
     }
 }
