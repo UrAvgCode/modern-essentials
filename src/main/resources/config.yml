@@ -47,3 +47,10 @@ tab-list:
 chat:
   # Format of chat messages
   format: "<gray><player> <dark_gray>> <white><message>"
+
+join-quit:
+  # Custom join message
+  join-message: "<green>+ <player> <gray>Connected"
+
+  # Custom quit message
+  quit-message: "<red>- <player> <gray>Disconnected"

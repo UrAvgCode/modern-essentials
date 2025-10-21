@@ -15,7 +15,7 @@ public final class VanishModule extends PluginModule {
         super(plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         var player = event.getPlayer();
         if (isVanished(player)) {
@@ -34,7 +34,7 @@ public final class VanishModule extends PluginModule {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
         if (isVanished(event.getPlayer())) {
             event.quitMessage(null);
