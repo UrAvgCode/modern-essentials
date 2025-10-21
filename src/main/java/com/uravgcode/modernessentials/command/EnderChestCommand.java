@@ -20,9 +20,9 @@ public final class EnderChestCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("enderchest")
-            .requires(sender -> sender.getSender().hasPermission("essentials.enderchest"))
+            .requires(playerPermission("essentials.enderchest"))
             .then(Commands.argument("player", StringArgumentType.word())
-                .requires(sender -> sender.getSender().hasPermission("essentials.enderchest.others"))
+                .requires(playerPermission("essentials.enderchest.others"))
                 .suggests(EnderChestCommand::getPlayerSuggestions)
                 .executes(EnderChestCommand::openOtherEnderChest))
             .executes(EnderChestCommand::openEnderChest)

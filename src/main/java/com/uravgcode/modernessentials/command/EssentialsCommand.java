@@ -15,7 +15,7 @@ public final class EssentialsCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("essentials")
-            .requires(sender -> sender.getSender().hasPermission("essentials.admin"))
+            .requires(permission("essentials.admin"))
             .then(Commands.literal("reload").executes(EssentialsCommand::reload))
             .build()
         );

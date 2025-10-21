@@ -27,7 +27,7 @@ public final class WorkstationCommand implements BaseCommand {
 
         workstations.forEach((name, menu) ->
             registrar.register(Commands.literal(name)
-                .requires(sender -> sender.getSender().hasPermission("essentials." + name))
+                .requires(playerPermission("essentials." + name))
                 .executes(context -> openWorkstation(context, menu))
                 .build()
             )

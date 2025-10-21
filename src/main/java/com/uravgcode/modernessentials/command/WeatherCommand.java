@@ -22,7 +22,7 @@ public final class WeatherCommand implements BaseCommand {
 
         weathers.forEach((name, executor) ->
             registrar.register(Commands.literal(name)
-                .requires(sender -> sender.getSender().hasPermission("essentials.weather"))
+                .requires(playerPermission("essentials.weather"))
                 .executes(executor)
                 .build()
             )

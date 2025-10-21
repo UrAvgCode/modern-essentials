@@ -14,7 +14,7 @@ public final class SpeedCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("speed")
-            .requires(sender -> sender.getSender().hasPermission("essentials.speed"))
+            .requires(playerPermission("essentials.speed"))
             .then(Commands.argument("speed", FloatArgumentType.floatArg(0.0f, 1.0f))
                 .executes(SpeedCommand::execute)
             ).build()

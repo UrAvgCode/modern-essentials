@@ -14,7 +14,7 @@ public final class RepairCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("repair")
-            .requires(sender -> sender.getSender().hasPermission("essentials.repair"))
+            .requires(playerPermission("essentials.repair"))
             .executes(RepairCommand::execute)
             .build()
         );

@@ -19,7 +19,7 @@ public final class FlyCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("fly")
-            .requires(sender -> sender.getSender().hasPermission("essentials.fly"))
+            .requires(playerPermission("essentials.fly"))
             .executes(FlyCommand::execute)
             .build()
         );

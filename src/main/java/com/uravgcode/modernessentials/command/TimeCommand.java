@@ -25,7 +25,7 @@ public final class TimeCommand implements BaseCommand {
 
         times.forEach((name, time) ->
             registrar.register(Commands.literal(name)
-                .requires(sender -> sender.getSender().hasPermission("essentials.time"))
+                .requires(playerPermission("essentials.time"))
                 .executes(context -> setTime(context, time))
                 .build()
             )

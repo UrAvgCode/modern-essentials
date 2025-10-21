@@ -20,7 +20,7 @@ public final class InventorySeeCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("inventorysee")
-            .requires(sender -> sender.getSender().hasPermission("essentials.inventorysee"))
+            .requires(playerPermission("essentials.inventorysee"))
             .then(Commands.argument("player", StringArgumentType.word())
                 .suggests(InventorySeeCommand::getPlayerSuggestions)
                 .executes(InventorySeeCommand::openInventory))

@@ -12,7 +12,7 @@ public final class KickAllCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("kickall")
-            .requires(sender -> sender.getSender().hasPermission("essentials.kickall"))
+            .requires(permission("essentials.kickall"))
             .executes(KickAllCommand::execute)
             .build()
         );

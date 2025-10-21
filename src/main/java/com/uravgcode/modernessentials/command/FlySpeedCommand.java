@@ -14,7 +14,7 @@ public final class FlySpeedCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("flyspeed")
-            .requires(sender -> sender.getSender().hasPermission("essentials.flyspeed"))
+            .requires(playerPermission("essentials.flyspeed"))
             .then(Commands.argument("flyspeed", FloatArgumentType.floatArg(0.0f, 1.0f))
                 .executes(FlySpeedCommand::execute)
             ).build()

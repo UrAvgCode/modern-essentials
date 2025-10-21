@@ -18,7 +18,7 @@ public final class GodCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("god")
-            .requires(sender -> sender.getSender().hasPermission("essentials.god"))
+            .requires(playerPermission("essentials.god"))
             .executes(GodCommand::execute)
             .build()
         );

@@ -18,7 +18,7 @@ public final class VanishCommand implements BaseCommand {
     @Override
     public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("vanish")
-            .requires(sender -> sender.getSender().hasPermission("essentials.vanish"))
+            .requires(playerPermission("essentials.vanish"))
             .executes(VanishCommand::execute)
             .build()
         );
