@@ -5,12 +5,15 @@ import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class TimeCommand {
+@SuppressWarnings("unused")
+public final class TimeCommand implements BaseCommand {
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         var times = Map.of(
             "day", 1000L,
             "night", 13000L,

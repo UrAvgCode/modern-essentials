@@ -10,11 +10,14 @@ import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
-public class FlyCommand {
+@SuppressWarnings("unused")
+public final class FlyCommand implements BaseCommand {
     public static final NamespacedKey FLY_KEY = new NamespacedKey("modern-essentials", "fly");
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("fly")
             .requires(sender -> sender.getSender().hasPermission("essentials.fly"))
             .executes(FlyCommand::execute)

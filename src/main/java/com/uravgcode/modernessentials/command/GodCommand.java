@@ -9,11 +9,14 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
-public class GodCommand {
+@SuppressWarnings("unused")
+public final class GodCommand implements BaseCommand {
     public static final NamespacedKey GOD_KEY = new NamespacedKey("modern-essentials", "god");
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("god")
             .requires(sender -> sender.getSender().hasPermission("essentials.god"))
             .executes(GodCommand::execute)

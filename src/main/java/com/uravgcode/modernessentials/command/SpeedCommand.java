@@ -6,10 +6,13 @@ import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-public class SpeedCommand {
+@SuppressWarnings("unused")
+public final class SpeedCommand implements BaseCommand {
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("speed")
             .requires(sender -> sender.getSender().hasPermission("essentials.speed"))
             .then(Commands.argument("speed", FloatArgumentType.floatArg(0.0f, 1.0f))

@@ -10,12 +10,15 @@ import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
-public class InventorySeeCommand {
+@SuppressWarnings("unused")
+public final class InventorySeeCommand implements BaseCommand {
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("inventorysee")
             .requires(sender -> sender.getSender().hasPermission("essentials.inventorysee"))
             .then(Commands.argument("player", StringArgumentType.word())

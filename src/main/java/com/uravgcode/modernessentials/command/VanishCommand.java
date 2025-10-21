@@ -9,11 +9,14 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
-public class VanishCommand {
+@SuppressWarnings("unused")
+public final class VanishCommand implements BaseCommand {
     public static final NamespacedKey VANISH_KEY = new NamespacedKey("modern-essentials", "vanish");
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("vanish")
             .requires(sender -> sender.getSender().hasPermission("essentials.vanish"))
             .executes(VanishCommand::execute)

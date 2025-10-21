@@ -4,10 +4,13 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import org.jetbrains.annotations.NotNull;
 
-public class KickAllCommand {
+@SuppressWarnings("unused")
+public final class KickAllCommand implements BaseCommand {
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("kickall")
             .requires(sender -> sender.getSender().hasPermission("essentials.kickall"))
             .executes(KickAllCommand::execute)

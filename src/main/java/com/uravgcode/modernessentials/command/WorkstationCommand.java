@@ -6,13 +6,15 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.MenuType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-@SuppressWarnings("UnstableApiUsage")
-public class WorkstationCommand {
+@SuppressWarnings({"unused", "UnstableApiUsage"})
+public final class WorkstationCommand implements BaseCommand {
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         var workstations = Map.of(
             "workbench", MenuType.CRAFTING,
             "anvil", MenuType.ANVIL,

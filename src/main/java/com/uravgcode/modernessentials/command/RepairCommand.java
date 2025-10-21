@@ -6,10 +6,13 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.Damageable;
+import org.jetbrains.annotations.NotNull;
 
-public class RepairCommand {
+@SuppressWarnings("unused")
+public final class RepairCommand implements BaseCommand {
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("repair")
             .requires(sender -> sender.getSender().hasPermission("essentials.repair"))
             .executes(RepairCommand::execute)

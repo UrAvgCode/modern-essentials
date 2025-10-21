@@ -7,10 +7,13 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.jetbrains.annotations.NotNull;
 
-public class EssentialsCommand {
+@SuppressWarnings("unused")
+public final class EssentialsCommand implements BaseCommand {
 
-    public static void registerCommands(Commands registrar) {
+    @Override
+    public void register(@NotNull Commands registrar) {
         registrar.register(Commands.literal("essentials")
             .requires(sender -> sender.getSender().hasPermission("essentials.admin"))
             .then(Commands.literal("reload").executes(EssentialsCommand::reload))
