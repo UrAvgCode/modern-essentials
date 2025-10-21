@@ -1,16 +1,19 @@
-package com.uravgcode.modernessentials.listener;
+package com.uravgcode.modernessentials.module;
 
 import com.uravgcode.modernessentials.command.FlyCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public record FlyListener(@NotNull JavaPlugin plugin) implements Listener {
+public final class FlyModule extends PluginModule {
+
+    public FlyModule(@NotNull JavaPlugin plugin) {
+        super(plugin);
+    }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {

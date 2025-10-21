@@ -1,5 +1,6 @@
-package com.uravgcode.modernessentials.listener;
+package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.ConfigValue;
 import com.uravgcode.modernessentials.placeholder.Placeholders;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -7,24 +8,22 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class ChatListener implements Listener {
-    private final JavaPlugin plugin;
+public final class ChatModule extends PluginModule {
     private final MiniMessage miniMessage;
 
-    private String format = "";
+    @ConfigValue(name = "chat.format")
+    private String format = "<gray><player> <dark_gray>> <white><message>";
 
-    public ChatListener(@NotNull JavaPlugin plugin) {
-        this.plugin = plugin;
+    public ChatModule(@NotNull JavaPlugin plugin) {
+        super(plugin);
         miniMessage = MiniMessage.builder().tags(TagResolver.resolver(
             TagResolver.standard(),
             Placeholders.globalPlaceholders(),
             Placeholders.audiencePlaceholders()
         )).build();
-        reload();
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -32,12 +31,5 @@ public class ChatListener implements Listener {
         event.renderer((player, playerName, message, viewer) ->
             miniMessage.deserialize(format, player, Placeholder.component("message", message))
         );
-    }
-
-    public void reload() {
-        final var config = plugin.getConfig().getConfigurationSection("chat");
-        if (config == null) return;
-
-        format = config.getString("format", "");
     }
 }

@@ -1,16 +1,19 @@
-package com.uravgcode.modernessentials.listener;
+package com.uravgcode.modernessentials.module;
 
 import com.uravgcode.modernessentials.command.VanishCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public record VanishListener(@NotNull JavaPlugin plugin) implements Listener {
+public final class VanishModule extends PluginModule {
+
+    public VanishModule(@NotNull JavaPlugin plugin) {
+        super(plugin);
+    }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -32,7 +35,7 @@ public record VanishListener(@NotNull JavaPlugin plugin) implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerJoinGod(PlayerQuitEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         if (isVanished(event.getPlayer())) {
             event.quitMessage(null);
         }

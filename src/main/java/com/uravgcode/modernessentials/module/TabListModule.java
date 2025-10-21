@@ -1,32 +1,37 @@
-package com.uravgcode.modernessentials.listener;
+package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.ConfigValue;
 import com.uravgcode.modernessentials.placeholder.Placeholders;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class JoinListener implements Listener {
-    private final JavaPlugin plugin;
+public final class TabListModule extends PluginModule {
     private final MiniMessage miniMessage;
 
+    @ConfigValue(name = "tab-list.format")
     private String format = "<player>";
+
+    @ConfigValue(name = "tab-list.header")
     private String headerString = "";
+
+    @ConfigValue(name = "tab-list.footer")
     private String footerString = "";
+
+    @ConfigValue(name = "tab-list.refresh-interval")
     private long refreshInterval = 20L;
 
-    public JoinListener(@NotNull JavaPlugin plugin) {
-        this.plugin = plugin;
+    public TabListModule(@NotNull JavaPlugin plugin) {
+        super(plugin);
         miniMessage = MiniMessage.builder().tags(TagResolver.resolver(
             TagResolver.standard(),
             Placeholders.globalPlaceholders(),
             Placeholders.audiencePlaceholders()
         )).build();
-        reload();
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -39,15 +44,5 @@ public class JoinListener implements Listener {
             player.playerListName(name);
             player.sendPlayerListHeaderAndFooter(header, footer);
         }, null, 1L, refreshInterval);
-    }
-
-    public void reload() {
-        final var config = plugin.getConfig().getConfigurationSection("tab-list");
-        if (config == null) return;
-
-        format = config.getString("format", "<player>");
-        headerString = String.join("\n", config.getStringList("header"));
-        footerString = String.join("\n", config.getStringList("footer"));
-        refreshInterval = config.getLong("refresh-interval", 20L);
     }
 }

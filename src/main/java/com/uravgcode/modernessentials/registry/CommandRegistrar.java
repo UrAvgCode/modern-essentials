@@ -4,12 +4,11 @@ import com.google.common.reflect.ClassPath;
 import com.uravgcode.modernessentials.command.BaseCommand;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.registrar.ReloadableRegistrarEvent;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.function.Predicate;
 
 public final class CommandRegistrar {
@@ -26,17 +25,17 @@ public final class CommandRegistrar {
                 .map(ClassPath.ClassInfo::load)
                 .filter(BaseCommand.class::isAssignableFrom)
                 .filter(Predicate.not(Class::isInterface))
+                .filter(clazz -> !Modifier.isAbstract(clazz.getModifiers()))
                 .toList();
 
             int count = 0;
             for (final var clazz : classes) {
                 try {
-                    final var commandClass = clazz.asSubclass(BaseCommand.class);
-                    final var command = commandClass.getDeclaredConstructor().newInstance();
+                    final var command = clazz.asSubclass(BaseCommand.class).getDeclaredConstructor().newInstance();
                     command.register(commands.registrar());
                     count++;
-                } catch (Exception e) {
-                    logger.info(Component.text("Failed to register: " + clazz.getSimpleName(), NamedTextColor.RED));
+                } catch (Exception ignored) {
+                    logger.warn("Failed to register {}", clazz.getSimpleName());
                 }
             }
 
