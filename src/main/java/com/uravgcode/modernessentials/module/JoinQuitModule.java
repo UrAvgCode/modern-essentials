@@ -15,10 +15,10 @@ public final class JoinQuitModule extends PluginModule {
     private final MiniMessage miniMessage;
 
     @ConfigValue(name = "join-quit.join-message")
-    private String joinMessage;
+    private String joinMessage = "<green>+ <player> <gray>Connected";
 
     @ConfigValue(name = "join-quit.quit-message")
-    private String quitMessage;
+    private String quitMessage = "<red>- <player> <gray>Disconnected";
 
     public JoinQuitModule(@NotNull JavaPlugin plugin) {
         super(plugin);
