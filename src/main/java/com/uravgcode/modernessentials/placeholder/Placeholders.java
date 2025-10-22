@@ -28,7 +28,7 @@ public final class Placeholders {
     );
 
     private static final TagResolver internalAudiencePlaceholders = TagResolver.resolver(
-        audiencePlaceholder("player", Player::name),
+        audiencePlaceholder("player", player -> player.name().hoverEvent(player)),
         audiencePlaceholder("displayname", Player::displayName),
         audiencePlaceholder("uuid", Player::getUniqueId),
         audiencePlaceholder("ping", Player::getPing),
