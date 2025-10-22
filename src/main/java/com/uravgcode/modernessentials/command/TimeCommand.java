@@ -9,7 +9,6 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.Objects;
 
 @SuppressWarnings("unused")
 public final class TimeCommand implements BaseCommand {
@@ -27,7 +26,7 @@ public final class TimeCommand implements BaseCommand {
 
         times.forEach((name, time) ->
             registrar.register(Commands.literal(name)
-                .requires(playerPermission("essentials.time"))
+                .requires(permission("essentials.time"))
                 .executes(context -> setTime(context, time))
                 .build()
             )
@@ -35,12 +34,15 @@ public final class TimeCommand implements BaseCommand {
     }
 
     private static int setTime(CommandContext<CommandSourceStack> context, long time) {
-        final var executor = Objects.requireNonNull(context.getSource().getExecutor());
         final var plugin = ModernEssentials.instance();
-        final var world = executor.getWorld();
+        final var sender = context.getSource().getSender();
+        final var server = sender.getServer();
 
-        executor.sendMessage(Component.translatable("commands.time.set", Component.text(time)));
-        executor.getServer().getGlobalRegionScheduler().execute(plugin, () -> world.setTime(time));
+        final var executor = context.getSource().getExecutor();
+        final var world = executor != null ? executor.getWorld() : server.getRespawnWorld();
+
+        sender.sendMessage(Component.translatable("commands.time.set", Component.text(time)));
+        server.getGlobalRegionScheduler().execute(plugin, () -> world.setTime(time));
 
         return Command.SINGLE_SUCCESS;
     }
