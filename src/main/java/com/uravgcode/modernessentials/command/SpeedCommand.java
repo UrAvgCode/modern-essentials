@@ -16,16 +16,24 @@ public final class SpeedCommand implements BaseCommand {
         registrar.register(Commands.literal("speed")
             .requires(playerPermission("essentials.speed"))
             .then(Commands.argument("speed", FloatArgumentType.floatArg(0.0f, 1.0f))
-                .executes(SpeedCommand::execute)
-            ).build()
+                .executes(SpeedCommand::setWalkSpeed))
+            .executes(SpeedCommand::setDefaultWalkSpeed)
+            .build()
         );
     }
 
-    private static int execute(CommandContext<CommandSourceStack> context) {
-        if (context.getSource().getExecutor() instanceof Player player) {
-            float speed = FloatArgumentType.getFloat(context, "speed");
-            player.setWalkSpeed(speed);
-        }
+    private static int setWalkSpeed(CommandContext<CommandSourceStack> context) {
+        final var player = (Player) context.getSource().getSender();
+        final var speed = FloatArgumentType.getFloat(context, "speed");
+        player.setWalkSpeed(speed);
+        player.sendMessage("walk speed set to " + speed);
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int setDefaultWalkSpeed(CommandContext<CommandSourceStack> context) {
+        final var player = (Player) context.getSource().getSender();
+        player.setWalkSpeed(0.2f);
+        player.sendMessage("walk speed reset to default");
         return Command.SINGLE_SUCCESS;
     }
 }
