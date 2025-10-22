@@ -17,20 +17,24 @@ public final class VanishModule extends PluginModule {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        var player = event.getPlayer();
+        final var player = event.getPlayer();
+        final var onlinePlayers = player.getServer().getOnlinePlayers();
+
         if (isVanished(player)) {
             event.joinMessage(null);
-            for (var other : player.getServer().getOnlinePlayers()) {
+            player.setInvisible(true);
+            onlinePlayers.forEach(other -> {
                 other.hidePlayer(plugin, player);
                 other.unlistPlayer(player);
-            }
+            });
         } else {
-            for (var other : player.getServer().getOnlinePlayers()) {
+            player.setInvisible(false);
+            onlinePlayers.forEach(other -> {
                 if (isVanished(other)) {
                     player.hidePlayer(plugin, other);
                     player.unlistPlayer(other);
                 }
-            }
+            });
         }
     }
 
