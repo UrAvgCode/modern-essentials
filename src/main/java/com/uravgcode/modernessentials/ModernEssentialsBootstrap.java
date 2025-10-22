@@ -9,8 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
-@SuppressWarnings("UnstableApiUsage")
-public class ModernEssentialsBootstrap implements PluginBootstrap {
+@SuppressWarnings({"unused", "UnstableApiUsage"})
+public final class ModernEssentialsBootstrap implements PluginBootstrap {
 
     @Override
     public void bootstrap(BootstrapContext context) {
