@@ -35,7 +35,7 @@ paperPluginYaml {
     main = "com.uravgcode.modernessentials.ModernEssentials"
     bootstrapper = "com.uravgcode.modernessentials.ModernEssentialsBootstrap"
     foliaSupported = true
-    apiVersion = "1.21"
+    apiVersion = "1.21.10"
 
     name = "modern-essentials"
     description = "a modern essentials plugin"
