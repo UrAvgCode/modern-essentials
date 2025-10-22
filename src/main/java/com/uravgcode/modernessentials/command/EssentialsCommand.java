@@ -22,11 +22,12 @@ public final class EssentialsCommand implements BaseCommand {
     }
 
     private static int reload(CommandContext<CommandSourceStack> context) {
-        var plugin = context.getSource().getSender().getServer().getPluginManager().getPlugin("modern-essentials");
-        if (!(plugin instanceof ModernEssentials modernEssentials)) return 0;
+        final var plugin = ModernEssentials.instance();
+        final var sender = context.getSource().getSender();
 
-        modernEssentials.reload();
-        context.getSource().getSender().sendMessage(Component.text("successfully reloaded config", NamedTextColor.GREEN));
+        plugin.reload();
+        sender.sendMessage(Component.text("successfully reloaded config", NamedTextColor.GREEN));
+
         return Command.SINGLE_SUCCESS;
     }
 }
