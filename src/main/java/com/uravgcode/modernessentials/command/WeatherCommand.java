@@ -9,7 +9,6 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.Objects;
 
 @SuppressWarnings("unused")
 public final class WeatherCommand implements BaseCommand {
@@ -24,7 +23,7 @@ public final class WeatherCommand implements BaseCommand {
 
         weathers.forEach((name, executor) ->
             registrar.register(Commands.literal(name)
-                .requires(playerPermission("essentials.weather"))
+                .requires(permission("essentials.weather"))
                 .executes(executor)
                 .build()
             )
@@ -32,12 +31,15 @@ public final class WeatherCommand implements BaseCommand {
     }
 
     private static int setWeather(CommandContext<CommandSourceStack> context, boolean storm, boolean thunder, @NotNull String key) {
-        final var executor = Objects.requireNonNull(context.getSource().getExecutor());
         final var plugin = ModernEssentials.instance();
-        final var world = executor.getWorld();
+        final var sender = context.getSource().getSender();
+        final var server = sender.getServer();
 
-        executor.sendMessage(Component.translatable(key));
-        executor.getServer().getGlobalRegionScheduler().execute(plugin, () -> {
+        final var executor = context.getSource().getExecutor();
+        final var world = executor != null ? executor.getWorld() : server.getRespawnWorld();
+
+        sender.sendMessage(Component.translatable(key));
+        server.getGlobalRegionScheduler().execute(plugin, () -> {
             world.setStorm(storm);
             world.setThundering(thunder);
         });
