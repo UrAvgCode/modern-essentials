@@ -1,5 +1,3 @@
-rootProject.name = "modern-essentials"
-
 pluginManagement {
     repositories {
         mavenCentral()
@@ -11,9 +9,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        maven {
-            name = "papermc-repo"
-            url = uri("https://repo.papermc.io/repository/maven-public/")
-        }
     }
 }
+
+rootProject.name = "modern-essentials"

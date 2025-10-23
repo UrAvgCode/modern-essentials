@@ -10,20 +10,7 @@ group = "com.uravgcode"
 version = "0.2.0"
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-}
-
-tasks {
-    withType<JavaCompile>().configureEach {
-        options.encoding = "UTF-8"
-        options.release.set(21)
-    }
-
-    runServer {
-        minecraftVersion("1.21.10")
-    }
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 dependencies {
@@ -46,5 +33,16 @@ paperPluginYaml {
         load = Load.BEFORE
         required = false
         joinClasspath = true
+    }
+}
+
+tasks {
+    withType<JavaCompile>().configureEach {
+        options.encoding = "UTF-8"
+        options.release.set(21)
+    }
+
+    runServer {
+        minecraftVersion("1.21.10")
     }
 }
