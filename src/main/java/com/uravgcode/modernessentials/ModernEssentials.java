@@ -20,9 +20,8 @@ public final class ModernEssentials extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
         ModuleRegistrar.registerAll(this);
-        ModuleRegistrar.reloadAll();
+        reload();
     }
 
     public void reload() {
