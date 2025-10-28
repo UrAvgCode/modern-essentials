@@ -3,17 +3,17 @@ package com.uravgcode.modernessentials.module;
 import com.uravgcode.modernessentials.annotation.ConfigModule;
 import com.uravgcode.modernessentials.annotation.ConfigValue;
 import com.uravgcode.modernessentials.placeholder.Placeholders;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 @ConfigModule(path = "tab-list")
 public final class TabListModule extends PluginModule {
     private final MiniMessage miniMessage;
+    private ScheduledTask task = null;
 
     @ConfigValue(path = "tab-list.format")
     private String format = "<player>";
@@ -36,15 +36,33 @@ public final class TabListModule extends PluginModule {
         )).build();
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        final var player = event.getPlayer();
-        player.getScheduler().runAtFixedRate(plugin, task -> {
-            var name = miniMessage.deserialize(format, player);
-            var header = miniMessage.deserialize(headerString, player);
-            var footer = miniMessage.deserialize(footerString, player);
+    @Override
+    public void enable() {
+        if (task != null) return;
+        enabled = true;
+
+        final var scheduler = plugin.getServer().getGlobalRegionScheduler();
+        task = scheduler.runAtFixedRate(plugin, this::updatePlayerList, 1L, refreshInterval);
+    }
+
+    @Override
+    public void disable() {
+        if (task == null) return;
+        enabled = false;
+
+        task.cancel();
+        task = null;
+    }
+
+    private void updatePlayerList(final ScheduledTask ignored) {
+        final var server = plugin.getServer();
+        for (final var player : server.getOnlinePlayers()) {
+            final var name = miniMessage.deserialize(format, player);
+            final var header = miniMessage.deserialize(headerString, player);
+            final var footer = miniMessage.deserialize(footerString, player);
+
             player.playerListName(name);
             player.sendPlayerListHeaderAndFooter(header, footer);
-        }, null, 1L, refreshInterval);
+        }
     }
 }
