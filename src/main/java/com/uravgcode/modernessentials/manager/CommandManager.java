@@ -1,4 +1,4 @@
-package com.uravgcode.modernessentials.registry;
+package com.uravgcode.modernessentials.manager;
 
 import com.google.common.reflect.ClassPath;
 import com.uravgcode.modernessentials.command.PluginCommand;
@@ -12,14 +12,14 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class CommandRegistrar {
-    private CommandRegistrar() {
+public final class CommandManager {
+    private CommandManager() {
     }
 
     public static List<@NotNull Class<? extends PluginCommand>> discoverCommands() {
         try {
             final var commandClasses = new ArrayList<Class<? extends PluginCommand>>();
-            final var classLoader = CommandRegistrar.class.getClassLoader();
+            final var classLoader = CommandManager.class.getClassLoader();
             final var classPath = ClassPath.from(classLoader);
 
             final var packageName = "com.uravgcode.modernessentials.command";

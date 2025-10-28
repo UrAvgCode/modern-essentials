@@ -1,6 +1,6 @@
 package com.uravgcode.modernessentials;
 
-import com.uravgcode.modernessentials.registry.ModuleRegistrar;
+import com.uravgcode.modernessentials.manager.ModuleManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,13 +20,13 @@ public final class ModernEssentials extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        ModuleRegistrar.initializeModules(this);
+        ModuleManager.initializeModules(this);
         reload();
     }
 
     public void reload() {
         saveDefaultConfig();
         reloadConfig();
-        ModuleRegistrar.reloadModules();
+        ModuleManager.reloadModules();
     }
 }

@@ -1,6 +1,6 @@
 package com.uravgcode.modernessentials;
 
-import com.uravgcode.modernessentials.registry.CommandRegistrar;
+import com.uravgcode.modernessentials.manager.CommandManager;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
@@ -15,7 +15,7 @@ public final class ModernEssentialsBootstrap implements PluginBootstrap {
     @Override
     public void bootstrap(BootstrapContext context) {
         context.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands ->
-            CommandRegistrar.registerCommands(commands, context.getLogger())
+            CommandManager.registerCommands(commands, context.getLogger())
         );
     }
 

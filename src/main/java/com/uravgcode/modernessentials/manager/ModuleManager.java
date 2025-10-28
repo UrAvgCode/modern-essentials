@@ -1,4 +1,4 @@
-package com.uravgcode.modernessentials.registry;
+package com.uravgcode.modernessentials.manager;
 
 import com.google.common.reflect.ClassPath;
 import com.uravgcode.modernessentials.module.PluginModule;
@@ -10,16 +10,16 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ModuleRegistrar {
+public final class ModuleManager {
     private static final List<@NotNull PluginModule> modules = new ArrayList<>();
 
-    private ModuleRegistrar() {
+    private ModuleManager() {
     }
 
     public static List<@NotNull Class<? extends PluginModule>> discoverModules() {
         try {
             final var moduleClasses = new ArrayList<Class<? extends PluginModule>>();
-            final var classLoader = ModuleRegistrar.class.getClassLoader();
+            final var classLoader = ModuleManager.class.getClassLoader();
             final var classPath = ClassPath.from(classLoader);
 
             final var packageName = "com.uravgcode.modernessentials.module";
@@ -43,6 +43,7 @@ public final class ModuleRegistrar {
     public static void initializeModules(@NotNull JavaPlugin plugin) {
         final var logger = plugin.getComponentLogger();
 
+        modules.clear();
         for (final var clazz : discoverModules()) {
             try {
                 final var constructor = clazz.getConstructor(JavaPlugin.class);
