@@ -1,5 +1,6 @@
 package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.CommandModule;
 import com.uravgcode.modernessentials.command.VanishCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+@CommandModule(name = "vanish")
 public final class VanishModule extends PluginModule {
 
     public VanishModule(@NotNull JavaPlugin plugin) {

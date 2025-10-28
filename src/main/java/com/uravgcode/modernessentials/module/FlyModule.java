@@ -1,5 +1,6 @@
 package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.CommandModule;
 import com.uravgcode.modernessentials.command.FlyCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+@CommandModule(name = "fly")
 public final class FlyModule extends PluginModule {
 
     public FlyModule(@NotNull JavaPlugin plugin) {

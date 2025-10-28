@@ -1,5 +1,6 @@
 package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.CommandModule;
 import com.uravgcode.modernessentials.command.GodCommand;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+@CommandModule(name = "god")
 public final class GodModule extends PluginModule {
 
     public GodModule(@NotNull JavaPlugin plugin) {

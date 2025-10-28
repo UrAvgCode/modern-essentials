@@ -1,5 +1,6 @@
 package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.CommandModule;
 import com.uravgcode.modernessentials.annotation.ConfigModule;
 import com.uravgcode.modernessentials.annotation.ConfigValue;
 import org.bukkit.event.HandlerList;
@@ -39,17 +40,19 @@ public abstract class PluginModule implements Listener {
             }
         }
 
+        boolean enabled = true;
         if (getClass().isAnnotationPresent(ConfigModule.class)) {
             final var annotation = getClass().getAnnotation(ConfigModule.class);
-            final var path = annotation.path() + ".enabled";
+            enabled = config.getBoolean(annotation.path() + ".enabled", false);
+        } else if (getClass().isAnnotationPresent(CommandModule.class)) {
+            final var annotation = getClass().getAnnotation(CommandModule.class);
+            enabled = plugin.getServer().getCommandMap().getCommand(annotation.name()) != null;
+        }
 
-            if (config.getBoolean(path, false)) {
-                enable();
-            } else {
-                disable();
-            }
-        } else {
+        if (enabled) {
             enable();
+        } else {
+            disable();
         }
     }
 

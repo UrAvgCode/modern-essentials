@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 @ConfigModule(path = "death-message")
-public class DeathMessageModule extends PluginModule {
+public final class DeathMessageModule extends PluginModule {
     private final MiniMessage miniMessage;
 
     @ConfigValue(path = "death-message.format")
