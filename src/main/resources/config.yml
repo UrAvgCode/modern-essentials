@@ -85,3 +85,12 @@ death-message:
 
   # Format of death messages
   format: "<gray>☠ <white><message>"
+
+# =========================
+# Commands
+# =========================
+commands:
+  # List of commands to disable, only applied on server reload or restart
+  disabled:
+  #  - inventorysee
+  #  - enderchest
