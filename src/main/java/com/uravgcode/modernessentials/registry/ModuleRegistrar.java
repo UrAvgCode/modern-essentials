@@ -17,7 +17,7 @@ public final class ModuleRegistrar {
     private ModuleRegistrar() {
     }
 
-    public static void registerAll(@NotNull JavaPlugin plugin) {
+    public static void initializeModules(@NotNull JavaPlugin plugin) {
         final var logger = plugin.getComponentLogger();
         try {
             final var loader = plugin.getClass().getClassLoader();
@@ -33,21 +33,21 @@ public final class ModuleRegistrar {
 
             for (final var clazz : classes) {
                 try {
-                    final var module = clazz.asSubclass(PluginModule.class).getConstructor(JavaPlugin.class).newInstance(plugin);
-                    plugin.getServer().getPluginManager().registerEvents(module, plugin);
+                    final var moduleClass = clazz.asSubclass(PluginModule.class);
+                    final var module = moduleClass.getConstructor(JavaPlugin.class).newInstance(plugin);
                     modules.add(module);
-                } catch (Exception ignored) {
-                    logger.warn("Failed to register {}", clazz.getSimpleName());
+                } catch (Exception exception) {
+                    logger.warn("Failed to initialize {}: {}", clazz.getSimpleName(), exception.getMessage());
                 }
             }
 
-            logger.info("Registered {} modules", modules.size());
+            logger.info("Initialized {} modules", modules.size());
         } catch (IOException exception) {
-            logger.error("Failed to register modules");
+            logger.error("Failed to initialize modules");
         }
     }
 
-    public static void reloadAll() {
+    public static void reloadModules() {
         modules.forEach(PluginModule::reload);
     }
 }

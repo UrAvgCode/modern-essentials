@@ -2,10 +2,13 @@
 # Modern Essentials Plugin Configuration
 # =======================================
 
-# =======================================
+# =========================
 # Server List Options
-# =======================================
+# =========================
 server-list:
+  # Enables server list module
+  enabled: true
+
   # MOTDs displayed in the server list
   motd:
     - |
@@ -27,7 +30,13 @@ server-list:
   # Disable hover text showing online players when hovering the player count
   disable-player-list-hover: false
 
+# =========================
+# Tab List Options
+# =========================
 tab-list:
+  # Enables tab list module
+  enabled: true
+
   # Format of each player's entry in the tab list
   format: "<player> <red><health>❤"
 
@@ -44,17 +53,35 @@ tab-list:
   # How often the tab is refreshed in ticks
   refresh-interval: 20
 
+# =========================
+# Chat Formatting
+# =========================
 chat:
+  # Enables chat module
+  enabled: true
+
   # Format of chat messages
   format: "<player_head> <gray><player> <dark_gray>> <white><message>"
 
+# =========================
+# Join & Quit Messages
+# =========================
 join-quit:
+  # Enables join quit module
+  enabled: true
+
   # Custom join message
   join-message: "<green>+ <player> <gray>Connected"
 
   # Custom quit message
   quit-message: "<red>- <player> <gray>Disconnected"
 
+# =========================
+# Death Message Formatting
+# =========================
 death-message:
+  # Enables death message module
+  enabled: true
+
   # Format of death messages
   format: "<gray>☠ <white><message>"

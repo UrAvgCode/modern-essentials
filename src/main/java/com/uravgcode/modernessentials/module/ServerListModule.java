@@ -1,6 +1,7 @@
 package com.uravgcode.modernessentials.module;
 
 import com.destroystokyo.paper.event.server.PaperServerListPingEvent;
+import com.uravgcode.modernessentials.annotation.ConfigModule;
 import com.uravgcode.modernessentials.annotation.ConfigValue;
 import com.uravgcode.modernessentials.placeholder.Placeholders;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -14,22 +15,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+@ConfigModule(path = "server-list")
 public final class ServerListModule extends PluginModule {
     private final MiniMessage miniMessage;
 
-    @ConfigValue(name = "server-list.motd")
+    @ConfigValue(path = "server-list.motd")
     private List<String> motds = Collections.emptyList();
 
-    @ConfigValue(name = "server-list.max-players")
+    @ConfigValue(path = "server-list.max-players")
     private int maxPlayers = -1;
 
-    @ConfigValue(name = "server-list.fake-players")
+    @ConfigValue(path = "server-list.fake-players")
     private int fakePlayers = -1;
 
-    @ConfigValue(name = "server-list.hide-player-count")
+    @ConfigValue(path = "server-list.hide-player-count")
     private boolean hidePlayerCount = false;
 
-    @ConfigValue(name = "server-list.disable-player-list-hover")
+    @ConfigValue(path = "server-list.disable-player-list-hover")
     private boolean disablePlayerListHover = false;
 
     public ServerListModule(@NotNull JavaPlugin plugin) {

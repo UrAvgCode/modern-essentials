@@ -1,5 +1,6 @@
 package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.ConfigModule;
 import com.uravgcode.modernessentials.annotation.ConfigValue;
 import com.uravgcode.modernessentials.placeholder.Placeholders;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -11,10 +12,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+@ConfigModule(path = "death-message")
 public class DeathMessageModule extends PluginModule {
     private final MiniMessage miniMessage;
 
-    @ConfigValue(name = "death-message.format")
+    @ConfigValue(path = "death-message.format")
     private String format = "<message>";
 
     public DeathMessageModule(@NotNull JavaPlugin plugin) {

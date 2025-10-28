@@ -1,5 +1,6 @@
 package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.ConfigModule;
 import com.uravgcode.modernessentials.annotation.ConfigValue;
 import com.uravgcode.modernessentials.placeholder.Placeholders;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -10,19 +11,20 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+@ConfigModule(path = "tab-list")
 public final class TabListModule extends PluginModule {
     private final MiniMessage miniMessage;
 
-    @ConfigValue(name = "tab-list.format")
+    @ConfigValue(path = "tab-list.format")
     private String format = "<player>";
 
-    @ConfigValue(name = "tab-list.header")
+    @ConfigValue(path = "tab-list.header")
     private String headerString = "";
 
-    @ConfigValue(name = "tab-list.footer")
+    @ConfigValue(path = "tab-list.footer")
     private String footerString = "";
 
-    @ConfigValue(name = "tab-list.refresh-interval")
+    @ConfigValue(path = "tab-list.refresh-interval")
     private long refreshInterval = 20L;
 
     public TabListModule(@NotNull JavaPlugin plugin) {

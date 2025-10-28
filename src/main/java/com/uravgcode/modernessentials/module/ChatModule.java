@@ -1,5 +1,6 @@
 package com.uravgcode.modernessentials.module;
 
+import com.uravgcode.modernessentials.annotation.ConfigModule;
 import com.uravgcode.modernessentials.annotation.ConfigValue;
 import com.uravgcode.modernessentials.placeholder.Placeholders;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -11,10 +12,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+@ConfigModule(path = "chat")
 public final class ChatModule extends PluginModule {
     private final MiniMessage miniMessage;
 
-    @ConfigValue(name = "chat.format")
+    @ConfigValue(path = "chat.format")
     private String format = "<gray><player> <dark_gray>> <white><message>";
 
     public ChatModule(@NotNull JavaPlugin plugin) {
