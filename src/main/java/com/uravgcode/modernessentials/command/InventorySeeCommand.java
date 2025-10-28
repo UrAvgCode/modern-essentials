@@ -5,12 +5,12 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,14 +18,13 @@ import java.util.concurrent.CompletableFuture;
 public final class InventorySeeCommand implements PluginCommand {
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("inventorysee")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("inventorysee")
             .requires(playerPermission("essentials.inventorysee"))
             .then(Commands.argument("player", StringArgumentType.word())
                 .suggests(InventorySeeCommand::getPlayerSuggestions)
                 .executes(InventorySeeCommand::openInventory))
-            .build()
-        );
+            .build();
     }
 
     private static int openInventory(CommandContext<CommandSourceStack> context) {

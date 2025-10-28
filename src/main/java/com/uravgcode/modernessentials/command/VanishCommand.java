@@ -2,6 +2,7 @@ package com.uravgcode.modernessentials.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.uravgcode.modernessentials.ModernEssentials;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -10,19 +11,17 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public final class VanishCommand implements PluginCommand {
     public static final NamespacedKey VANISH_KEY = new NamespacedKey("modern-essentials", "vanish");
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("vanish")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("vanish")
             .requires(playerPermission("essentials.vanish"))
             .executes(VanishCommand::execute)
-            .build()
-        );
+            .build();
     }
 
     private static int execute(CommandContext<CommandSourceStack> context) {

@@ -3,23 +3,22 @@ package com.uravgcode.modernessentials.command;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public final class FlySpeedCommand implements PluginCommand {
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("flyspeed")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("flyspeed")
             .requires(playerPermission("essentials.flyspeed"))
             .then(Commands.argument("speed", FloatArgumentType.floatArg(0.0f, 1.0f))
                 .executes(FlySpeedCommand::setFlySpeed))
             .executes(FlySpeedCommand::setDefaultFlySpeed)
-            .build()
-        );
+            .build();
     }
 
     private static int setFlySpeed(CommandContext<CommandSourceStack> context) {

@@ -41,12 +41,14 @@ public final class CommandManager {
     }
 
     public static void registerCommands(@NotNull ReloadableRegistrarEvent<@NotNull Commands> commands, @NotNull ComponentLogger logger) {
+        final var registrar = commands.registrar();
+
         int count = 0;
         for (final var clazz : discoverCommands()) {
             try {
                 final var constructor = clazz.getDeclaredConstructor();
                 final var command = constructor.newInstance();
-                command.register(commands.registrar());
+                registrar.register(command.build());
                 count++;
             } catch (Exception exception) {
                 logger.warn("Failed to register {}: {}", clazz.getSimpleName(), exception.getMessage());

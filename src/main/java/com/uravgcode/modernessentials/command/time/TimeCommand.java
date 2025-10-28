@@ -1,39 +1,33 @@
-package com.uravgcode.modernessentials.command;
+package com.uravgcode.modernessentials.command.time;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.uravgcode.modernessentials.ModernEssentials;
+import com.uravgcode.modernessentials.command.PluginCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
+public abstract class TimeCommand implements PluginCommand {
+    protected final String name;
+    protected final long time;
 
-@SuppressWarnings("unused")
-public final class TimeCommand implements PluginCommand {
-
-    @Override
-    public void register(@NotNull Commands registrar) {
-        final var times = Map.of(
-            "day", 1000L,
-            "night", 13000L,
-            "noon", 6000L,
-            "midnight", 18000L,
-            "sunrise", 23000L,
-            "sunset", 12000L
-        );
-
-        times.forEach((name, time) ->
-            registrar.register(Commands.literal(name)
-                .requires(permission("essentials.time"))
-                .executes(context -> setTime(context, time))
-                .build()
-            )
-        );
+    protected TimeCommand(@NotNull String name, long time) {
+        this.name = name;
+        this.time = time;
     }
 
-    private static int setTime(CommandContext<CommandSourceStack> context, long time) {
+    @Override
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal(name)
+            .requires(permission("essentials.time"))
+            .executes(this::setTime)
+            .build();
+    }
+
+    private int setTime(CommandContext<CommandSourceStack> context) {
         final var plugin = ModernEssentials.instance();
         final var sender = context.getSource().getSender();
         final var server = sender.getServer();

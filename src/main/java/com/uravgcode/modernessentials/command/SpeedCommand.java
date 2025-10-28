@@ -3,23 +3,22 @@ package com.uravgcode.modernessentials.command;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public final class SpeedCommand implements PluginCommand {
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("speed")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("speed")
             .requires(playerPermission("essentials.speed"))
             .then(Commands.argument("speed", FloatArgumentType.floatArg(0.0f, 1.0f))
                 .executes(SpeedCommand::setWalkSpeed))
             .executes(SpeedCommand::setDefaultWalkSpeed)
-            .build()
-        );
+            .build();
     }
 
     private static int setWalkSpeed(CommandContext<CommandSourceStack> context) {

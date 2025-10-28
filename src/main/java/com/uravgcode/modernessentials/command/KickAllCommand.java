@@ -2,20 +2,19 @@ package com.uravgcode.modernessentials.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public final class KickAllCommand implements PluginCommand {
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("kickall")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("kickall")
             .requires(permission("essentials.kickall"))
             .executes(KickAllCommand::execute)
-            .build()
-        );
+            .build();
     }
 
     private static int execute(CommandContext<CommandSourceStack> context) {

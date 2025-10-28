@@ -1,14 +1,14 @@
 package com.uravgcode.modernessentials.command;
 
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
 public interface PluginCommand {
-    void register(@NotNull Commands registrar);
+    LiteralCommandNode<CommandSourceStack> build();
 
     default @NotNull Predicate<CommandSourceStack> permission(@NotNull String permission) {
         return source -> source.getSender().hasPermission(permission);

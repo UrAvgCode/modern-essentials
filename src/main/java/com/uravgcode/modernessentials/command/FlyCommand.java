@@ -2,6 +2,7 @@ package com.uravgcode.modernessentials.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
@@ -10,19 +11,17 @@ import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public final class FlyCommand implements PluginCommand {
     public static final NamespacedKey FLY_KEY = new NamespacedKey("modern-essentials", "fly");
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("fly")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("fly")
             .requires(playerPermission("essentials.fly"))
             .executes(FlyCommand::execute)
-            .build()
-        );
+            .build();
     }
 
     private static int execute(CommandContext<CommandSourceStack> context) {

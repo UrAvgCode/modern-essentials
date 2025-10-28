@@ -27,7 +27,7 @@ commands and features.
 | `/enderchest`                                  | Open your Ender Chest from anywhere                      | `essentials.enderchest`        |
 | `/enderchest <player>`                         | Open other players Ender Chests                          | `essentials.enderchest.others` |
 | `/inventorysee <player>`                       | View another player’s inventory                          | `essentials.inventorysee`      |
-| `/workbench`                                   | Open a crafting table                                    | `essentials.workbench`         |
+| `/craftingtable`                               | Open a crafting table                                    | `essentials.craftingtable`     |
 | `/anvil`                                       | Open an anvil                                            | `essentials.anvil`             |
 | `/cartographytable`                            | Open a cartographytable                                  | `essentials.cartographytable`  |
 | `/grindstone`                                  | Open a grindstone                                        | `essentials.grindstone`        |

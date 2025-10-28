@@ -2,23 +2,22 @@ package com.uravgcode.modernessentials.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.uravgcode.modernessentials.ModernEssentials;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public final class EssentialsCommand implements PluginCommand {
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("essentials")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("essentials")
             .requires(permission("essentials.admin"))
             .then(Commands.literal("reload").executes(EssentialsCommand::reload))
-            .build()
-        );
+            .build();
     }
 
     private static int reload(CommandContext<CommandSourceStack> context) {

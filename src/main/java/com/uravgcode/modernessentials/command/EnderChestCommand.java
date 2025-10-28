@@ -5,12 +5,12 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,16 +18,15 @@ import java.util.concurrent.CompletableFuture;
 public final class EnderChestCommand implements PluginCommand {
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("enderchest")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("enderchest")
             .requires(playerPermission("essentials.enderchest"))
             .then(Commands.argument("player", StringArgumentType.word())
                 .requires(playerPermission("essentials.enderchest.others"))
                 .suggests(EnderChestCommand::getPlayerSuggestions)
                 .executes(EnderChestCommand::openOtherEnderChest))
             .executes(EnderChestCommand::openEnderChest)
-            .build()
-        );
+            .build();
     }
 
     private static int openEnderChest(CommandContext<CommandSourceStack> context) {

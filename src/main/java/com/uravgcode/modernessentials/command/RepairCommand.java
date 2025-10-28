@@ -2,6 +2,7 @@ package com.uravgcode.modernessentials.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
@@ -10,7 +11,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -21,14 +21,13 @@ public final class RepairCommand implements PluginCommand {
     private static final Component SUCCESSFULLY_REPAIRED = Component.text("successfully repaired ", NamedTextColor.GREEN);
 
     @Override
-    public void register(@NotNull Commands registrar) {
-        registrar.register(Commands.literal("repair")
+    public LiteralCommandNode<CommandSourceStack> build() {
+        return Commands.literal("repair")
             .requires(playerPermission("essentials.repair"))
             .then(Commands.literal("hand").executes(RepairCommand::repairHand))
             .then(Commands.literal("all").executes(RepairCommand::repairAll))
             .executes(RepairCommand::repairHand)
-            .build()
-        );
+            .build();
     }
 
     private static int repairHand(CommandContext<CommandSourceStack> context) {
