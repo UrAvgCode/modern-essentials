@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 @SuppressWarnings({"unused", "UnstableApiUsage"})
-public final class WorkstationCommand implements BaseCommand {
+public final class WorkstationCommand implements PluginCommand {
 
     @Override
     public void register(@NotNull Commands registrar) {

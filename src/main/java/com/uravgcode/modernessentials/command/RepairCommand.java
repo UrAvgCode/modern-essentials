@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 @SuppressWarnings("unused")
-public final class RepairCommand implements BaseCommand {
+public final class RepairCommand implements PluginCommand {
     private static final Component NOTHING_TO_REPAIR = Component.text("nothing to repair", NamedTextColor.RED);
     private static final Component SUCCESSFULLY_REPAIRED = Component.text("successfully repaired ", NamedTextColor.GREEN);
 

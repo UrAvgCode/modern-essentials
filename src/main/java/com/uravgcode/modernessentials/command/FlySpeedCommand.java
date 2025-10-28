@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public final class FlySpeedCommand implements BaseCommand {
+public final class FlySpeedCommand implements PluginCommand {
 
     @Override
     public void register(@NotNull Commands registrar) {

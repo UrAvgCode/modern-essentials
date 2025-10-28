@@ -15,7 +15,7 @@ public final class ModernEssentialsBootstrap implements PluginBootstrap {
     @Override
     public void bootstrap(BootstrapContext context) {
         context.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands ->
-            CommandRegistrar.registerAll(commands, context.getLogger())
+            CommandRegistrar.registerCommands(commands, context.getLogger())
         );
     }
 

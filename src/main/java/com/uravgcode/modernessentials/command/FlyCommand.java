@@ -13,7 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public final class FlyCommand implements BaseCommand {
+public final class FlyCommand implements PluginCommand {
     public static final NamespacedKey FLY_KEY = new NamespacedKey("modern-essentials", "fly");
 
     @Override

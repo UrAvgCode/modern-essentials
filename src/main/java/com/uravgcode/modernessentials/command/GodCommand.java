@@ -12,7 +12,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public final class GodCommand implements BaseCommand {
+public final class GodCommand implements PluginCommand {
     public static final NamespacedKey GOD_KEY = new NamespacedKey("modern-essentials", "god");
 
     @Override

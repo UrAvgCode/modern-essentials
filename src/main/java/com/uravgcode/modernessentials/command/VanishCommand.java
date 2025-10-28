@@ -13,7 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public final class VanishCommand implements BaseCommand {
+public final class VanishCommand implements PluginCommand {
     public static final NamespacedKey VANISH_KEY = new NamespacedKey("modern-essentials", "vanish");
 
     @Override

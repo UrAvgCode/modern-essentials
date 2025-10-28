@@ -7,7 +7,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public final class KickAllCommand implements BaseCommand {
+public final class KickAllCommand implements PluginCommand {
 
     @Override
     public void register(@NotNull Commands registrar) {

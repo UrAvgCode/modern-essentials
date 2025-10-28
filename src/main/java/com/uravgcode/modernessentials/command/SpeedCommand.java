@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public final class SpeedCommand implements BaseCommand {
+public final class SpeedCommand implements PluginCommand {
 
     @Override
     public void register(@NotNull Commands registrar) {

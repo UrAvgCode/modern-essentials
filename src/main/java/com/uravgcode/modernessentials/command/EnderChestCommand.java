@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("unused")
-public final class EnderChestCommand implements BaseCommand {
+public final class EnderChestCommand implements PluginCommand {
 
     @Override
     public void register(@NotNull Commands registrar) {

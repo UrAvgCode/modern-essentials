@@ -10,7 +10,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public final class EssentialsCommand implements BaseCommand {
+public final class EssentialsCommand implements PluginCommand {
 
     @Override
     public void register(@NotNull Commands registrar) {

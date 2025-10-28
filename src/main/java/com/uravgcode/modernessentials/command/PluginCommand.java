@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public interface BaseCommand {
+public interface PluginCommand {
     void register(@NotNull Commands registrar);
 
     default @NotNull Predicate<CommandSourceStack> permission(@NotNull String permission) {

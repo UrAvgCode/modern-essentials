@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 @SuppressWarnings("unused")
-public final class WeatherCommand implements BaseCommand {
+public final class WeatherCommand implements PluginCommand {
 
     @Override
     public void register(@NotNull Commands registrar) {
