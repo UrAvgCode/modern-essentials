@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class PluginModule implements Listener {
@@ -73,6 +74,7 @@ public abstract class PluginModule implements Listener {
     private static @NotNull Object convert(@NotNull Object value, @NotNull Class<?> type) {
         return switch (value) {
             case List<?> list when type == String.class -> list.stream().map(Object::toString).collect(Collectors.joining("\n"));
+            case List<?> list when type == Set.class -> Set.copyOf(list);
             case String string when type == List.class -> List.of(string);
             default -> value;
         };

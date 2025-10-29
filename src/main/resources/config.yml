@@ -87,10 +87,23 @@ death-message:
   format: "<gray>☠ <white><message>"
 
 # =========================
+# Command Whitelist
+# =========================
+command-whitelist:
+  # Enables command whitelist module
+  enabled: false
+
+  # List of whitelisted commands
+  whitelist:
+    - help
+    - msg
+
+# =========================
 # Commands
 # =========================
 commands:
-  # List of commands to disable, only applied on server reload or restart
+  # List of essentials commands to disable
+  # Only applied on server reload or restart
   disabled:
   #  - inventorysee
   #  - enderchest
