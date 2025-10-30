@@ -7,11 +7,9 @@ import com.uravgcode.modernessentials.event.FlyEvent;
 import com.uravgcode.modernessentials.exception.RequiresPlayerException;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import org.bukkit.NamespacedKey;
 
 @SuppressWarnings("unused")
 public final class FlyCommand implements CommandBuilder {
-    public static final NamespacedKey FLY_KEY = new NamespacedKey("modern-essentials", "fly");
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
