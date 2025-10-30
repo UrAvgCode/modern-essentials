@@ -1,7 +1,7 @@
 package com.uravgcode.modernessentials.manager;
 
 import com.google.common.reflect.ClassPath;
-import com.uravgcode.modernessentials.command.PluginCommand;
+import com.uravgcode.modernessentials.command.CommandBuilder;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.lifecycle.event.registrar.ReloadableRegistrarEvent;
@@ -49,8 +49,8 @@ public final class CommandManager {
         logger.info("Registered {} commands", count);
     }
 
-    private List<@NotNull Class<? extends PluginCommand>> discoverCommands() {
-        final var commandClasses = new ArrayList<Class<? extends PluginCommand>>();
+    private List<@NotNull Class<? extends CommandBuilder>> discoverCommands() {
+        final var commandClasses = new ArrayList<Class<? extends CommandBuilder>>();
         try {
             final var classLoader = getClass().getClassLoader();
             final var classPath = ClassPath.from(classLoader);
@@ -59,11 +59,11 @@ public final class CommandManager {
             for (final var classInfo : classPath.getTopLevelClassesRecursive(packageName)) {
                 final var clazz = classInfo.load();
 
-                if (!PluginCommand.class.isAssignableFrom(clazz)) continue;
+                if (!CommandBuilder.class.isAssignableFrom(clazz)) continue;
                 if (Modifier.isAbstract(clazz.getModifiers())) continue;
                 if (clazz.isInterface()) continue;
 
-                final var commandClass = clazz.asSubclass(PluginCommand.class);
+                final var commandClass = clazz.asSubclass(CommandBuilder.class);
                 commandClasses.add(commandClass);
             }
         } catch (Exception exception) {

@@ -3,12 +3,12 @@ package com.uravgcode.modernessentials.command;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.uravgcode.modernessentials.exception.RequiresPlayerException;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.jetbrains.annotations.Nullable;
@@ -16,22 +16,22 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 @SuppressWarnings("unused")
-public final class RepairCommand implements PluginCommand {
+public final class RepairCommand implements CommandBuilder {
     private static final Component NOTHING_TO_REPAIR = Component.text("nothing to repair", NamedTextColor.RED);
     private static final Component SUCCESSFULLY_REPAIRED = Component.text("successfully repaired ", NamedTextColor.GREEN);
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
         return Commands.literal("repair")
-            .requires(playerPermission("essentials.repair"))
-            .then(Commands.literal("hand").executes(RepairCommand::repairHand))
-            .then(Commands.literal("all").executes(RepairCommand::repairAll))
-            .executes(RepairCommand::repairHand)
+            .requires(permission("essentials.repair"))
+            .then(Commands.literal("hand").executes(this::repairHand))
+            .then(Commands.literal("all").executes(this::repairAll))
+            .executes(this::repairHand)
             .build();
     }
 
-    private static int repairHand(CommandContext<CommandSourceStack> context) {
-        final var player = (Player) context.getSource().getSender();
+    private int repairHand(CommandContext<CommandSourceStack> context) throws RequiresPlayerException {
+        final var player = player(context);
         final var item = player.getInventory().getItemInMainHand();
 
         if (repairItem(item)) {
@@ -43,8 +43,8 @@ public final class RepairCommand implements PluginCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int repairAll(CommandContext<CommandSourceStack> context) {
-        final var player = (Player) context.getSource().getSender();
+    private int repairAll(CommandContext<CommandSourceStack> context) throws RequiresPlayerException {
+        final var player = player(context);
         final var repairedItems = new ArrayList<Component>();
 
         player.getInventory().forEach(item -> {
@@ -62,7 +62,7 @@ public final class RepairCommand implements PluginCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static boolean repairItem(@Nullable ItemStack item) {
+    private boolean repairItem(@Nullable ItemStack item) {
         if (item != null && item.getItemMeta() instanceof Damageable damageable && damageable.hasDamage()) {
             damageable.setDamage(0);
             item.setItemMeta(damageable);

@@ -6,24 +6,25 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
-public final class KickAllCommand implements PluginCommand {
+public final class KickAllCommand implements CommandBuilder {
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
         return Commands.literal("kickall")
             .requires(permission("essentials.kickall"))
-            .executes(KickAllCommand::execute)
+            .executes(this::execute)
             .build();
     }
 
-    private static int execute(CommandContext<CommandSourceStack> context) {
-        final var source = context.getSource();
-        final var executor = source.getExecutor();
-        final var server = source.getSender().getServer();
+    private int execute(CommandContext<CommandSourceStack> context) {
+        final var sender = context.getSource().getSender();
+        final var players = List.copyOf(sender.getServer().getOnlinePlayers());
 
-        for (var player : server.getOnlinePlayers()) {
-            if (!player.equals(executor)) {
+        for (final var player : players) {
+            if (!player.equals(sender)) {
                 player.kick();
             }
         }

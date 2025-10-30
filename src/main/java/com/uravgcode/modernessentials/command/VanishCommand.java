@@ -4,25 +4,24 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.uravgcode.modernessentials.event.VanishEvent;
+import com.uravgcode.modernessentials.exception.RequiresPlayerException;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import org.bukkit.entity.Player;
 
 @SuppressWarnings("unused")
-public final class VanishCommand implements PluginCommand {
+public final class VanishCommand implements CommandBuilder {
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
         return Commands.literal("vanish")
-            .requires(playerPermission("essentials.vanish"))
-            .executes(VanishCommand::execute)
+            .requires(permission("essentials.vanish"))
+            .executes(this::execute)
             .build();
     }
 
-    private static int execute(CommandContext<CommandSourceStack> context) {
-        if (context.getSource().getSender() instanceof Player player) {
-            player.getServer().getPluginManager().callEvent(new VanishEvent(player));
-        }
+    private int execute(CommandContext<CommandSourceStack> context) throws RequiresPlayerException {
+        final var player = player(context);
+        player.getServer().getPluginManager().callEvent(new VanishEvent(player));
         return Command.SINGLE_SUCCESS;
     }
 }

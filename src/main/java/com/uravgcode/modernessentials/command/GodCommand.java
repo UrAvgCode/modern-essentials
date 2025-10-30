@@ -4,25 +4,24 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.uravgcode.modernessentials.event.GodEvent;
+import com.uravgcode.modernessentials.exception.RequiresPlayerException;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import org.bukkit.entity.Player;
 
 @SuppressWarnings("unused")
-public final class GodCommand implements PluginCommand {
+public final class GodCommand implements CommandBuilder {
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
         return Commands.literal("god")
-            .requires(playerPermission("essentials.god"))
-            .executes(GodCommand::execute)
+            .requires(permission("essentials.god"))
+            .executes(this::execute)
             .build();
     }
 
-    private static int execute(CommandContext<CommandSourceStack> context) {
-        if (context.getSource().getSender() instanceof Player player) {
-            player.getServer().getPluginManager().callEvent(new GodEvent(player));
-        }
+    private int execute(CommandContext<CommandSourceStack> context) throws RequiresPlayerException {
+        final var player = player(context);
+        player.getServer().getPluginManager().callEvent(new GodEvent(player));
         return Command.SINGLE_SUCCESS;
     }
 }

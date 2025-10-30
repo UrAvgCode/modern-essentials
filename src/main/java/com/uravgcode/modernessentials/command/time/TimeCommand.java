@@ -4,13 +4,13 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.uravgcode.modernessentials.ModernEssentials;
-import com.uravgcode.modernessentials.command.PluginCommand;
+import com.uravgcode.modernessentials.command.CommandBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class TimeCommand implements PluginCommand {
+public abstract class TimeCommand implements CommandBuilder {
     protected final String name;
     protected final long time;
 

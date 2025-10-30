@@ -4,45 +4,47 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.uravgcode.modernessentials.exception.NoPlayerFoundException;
+import com.uravgcode.modernessentials.exception.RequiresPlayerException;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import net.kyori.adventure.text.Component;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Player;
 
 @SuppressWarnings("unused")
-public class HealCommand implements PluginCommand {
+public final class HealCommand implements CommandBuilder {
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
         return Commands.literal("heal")
-            .requires(playerPermission("essentials.heal"))
+            .requires(permission("essentials.heal"))
             .then(Commands.argument("targets", ArgumentTypes.players())
                 .requires(permission("essentials.heal.others"))
-                .executes(HealCommand::healOther))
-            .executes(HealCommand::heal)
+                .executes(this::healOthers))
+            .executes(this::heal)
             .build();
     }
 
-    private static int heal(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        if (context.getSource().getSender() instanceof Player player) {
-            final var attribute = player.getAttribute(Attribute.MAX_HEALTH);
-            if (attribute != null) {
-                final var health = player.getHealth();
-                final var maxHealth = attribute.getValue();
-                player.heal(maxHealth - health);
-                player.sendMessage(Component.text("Healed ").append(player.name()));
-            }
+    private int heal(CommandContext<CommandSourceStack> context) throws RequiresPlayerException {
+        final var player = player(context);
+
+        final var attribute = player.getAttribute(Attribute.MAX_HEALTH);
+        if (attribute != null) {
+            final var health = player.getHealth();
+            final var maxHealth = attribute.getValue();
+            player.heal(maxHealth - health);
+            player.sendMessage(Component.text("Healed ").append(player.name()));
         }
 
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int healOther(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    private int healOthers(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         final var targetResolver = context.getArgument("targets", PlayerSelectorArgumentResolver.class);
         final var targets = targetResolver.resolve(context.getSource());
+        if (targets.isEmpty()) throw new NoPlayerFoundException();
 
         for (final var target : targets) {
             final var attribute = target.getAttribute(Attribute.MAX_HEALTH);
@@ -54,10 +56,10 @@ public class HealCommand implements PluginCommand {
         }
 
         final var sender = context.getSource().getSender();
-        if (targets.size() > 1) {
-            sender.sendMessage(Component.text("Healed " + targets.size() + " players"));
-        } else {
+        if (targets.size() == 1) {
             sender.sendMessage(Component.text("Healed ").append(targets.getFirst().name()));
+        } else {
+            sender.sendMessage(Component.text("Healed " + targets.size() + " players"));
         }
 
         return Command.SINGLE_SUCCESS;
