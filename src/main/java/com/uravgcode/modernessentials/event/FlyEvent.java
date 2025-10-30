@@ -5,7 +5,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class FlyEvent extends PlayerEvent {
+public final class FlyEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
 
     public FlyEvent(@NotNull Player player) {

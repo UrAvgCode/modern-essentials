@@ -5,7 +5,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class GodEvent extends PlayerEvent {
+public final class GodEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
 
     public GodEvent(@NotNull Player player) {

@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.Set;
 
 @ConfigModule(path = "command-whitelist")
-public class CommandWhitelistModule extends PluginModule {
+public final class CommandWhitelistModule extends PluginModule {
     private static final String permission = "essentials.commandwhitelist.bypass";
 
     @ConfigValue(path = "command-whitelist.whitelist")
