@@ -67,7 +67,7 @@ public final class WarpModule extends PluginModule {
         final var location = warps.get(name);
 
         if (location != null) {
-            player.teleport(location);
+            player.teleportAsync(location);
         } else {
             player.sendMessage(Component.text("Warp not found", NamedTextColor.RED));
         }
