@@ -14,6 +14,12 @@ commands and features.
 - **Custom Death Messages**
 - **Custom Command Whitelist**
 
+| MOTD                                | Chat                                | Tab List                          |
+|-------------------------------------|-------------------------------------|-----------------------------------|
+| ![MOTD Screenshot](readme/motd.png) | ![Chat Screenshot](readme/chat.png) | ![Tab Screenshot](readme/tab.png) |
+
+---
+
 ## Commands
 
 | Command                                        | Description                                              | Permission                     |
