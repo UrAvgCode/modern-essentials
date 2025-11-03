@@ -12,21 +12,31 @@ commands and features.
 - **Custom Chat Formatting**
 - **Custom Join and Quit Messages**
 - **Custom Death Messages**
+- **Custom Command Whitelist**
 
 ## Commands
 
 | Command                                        | Description                                              | Permission                     |
 |------------------------------------------------|----------------------------------------------------------|--------------------------------|
+| `/warp <name>`                                 | Teleport to the specified warp                           | `essentials.warp`              |
+| `/setwarp <name>`                              | Create a new warp                                        | `essentials.setwarp`           |
+| `/delwarp <name>`                              | Delete an existing warp                                  | `essentials.delwarp`           |
+| `/world <world>`                               | Teleport to another world                                | `essentials.world`             |
+| `/jump`                                        | Jump to the nearest block in your line of sight          | `essentials.jump`              |
+| `/top`                                         | Teleport to the highest block at your location           | `essentials.top`               |
+| `/bottom`                                      | Teleport to the lowest safe block at your location       | `essentials.bottom`            |
 | `/fly`                                         | Toggle flight mode                                       | `essentials.fly`               |
 | `/god`                                         | Enable invincibility                                     | `essentials.god`               |
 | `/vanish`                                      | Become invisible to other players                        | `essentials.vanish`            |
 | `/speed <speed>`                               | Set walk speed                                           | `essentials.speed`             |
-| `/flyspeed <flyspeed>`                         | Set fly speed                                            | `essentials.flyspeed`          |
-| `/kickall`                                     | Kick all other players from the server                   | `essentials.kickall`           |
-| `/repair hand\|all`                            | Repair the main-hand item or all items in your inventory | `essentials.repair`            |
+| `/flyspeed <speed>`                            | Set fly speed                                            | `essentials.flyspeed`          |
+| `/heal`                                        | Restore your health completely                           | `essentials.heal`              |
+| `/heal <targets>`                              | Restore the target players' health completely            | `essentials.heal.others`       |
+| `/feed`                                        | Restore your hunger completely                           | `essentials.feed`              |
+| `/feed <targets>`                              | Restore the target players' hunger completely            | `essentials.feed.others`       |
 | `/enderchest`                                  | Open your Ender Chest from anywhere                      | `essentials.enderchest`        |
-| `/enderchest <player>`                         | Open other players Ender Chests                          | `essentials.enderchest.others` |
-| `/inventorysee <player>`                       | View another player’s inventory                          | `essentials.inventorysee`      |
+| `/enderchest <target>`                         | Open the target player's Ender Chests                    | `essentials.enderchest.others` |
+| `/inventorysee <target>`                       | View the target player's inventory                       | `essentials.inventorysee`      |
 | `/craftingtable`                               | Open a crafting table                                    | `essentials.craftingtable`     |
 | `/anvil`                                       | Open an anvil                                            | `essentials.anvil`             |
 | `/cartographytable`                            | Open a cartographytable                                  | `essentials.cartographytable`  |
@@ -34,8 +44,12 @@ commands and features.
 | `/loom`                                        | Open a loom                                              | `essentials.loom`              |
 | `/smithingtable`                               | Open a smithingtable                                     | `essentials.smithingtable`     |
 | `/stonecutter`                                 | Open a stonecutter                                       | `essentials.stonecutter`       |
+| `/repair hand\|all`                            | Repair the main-hand item or all items in your inventory | `essentials.repair`            |
 | `/day\|night\|noon\|midnight\|sunrise\|sunset` | Set the time of day                                      | `essentials.time`              |
 | `/sun\|/rain\|/thunder`                        | Change the weather                                       | `essentials.weather`           |
+| `/kickall`                                     | Kick all other players from the server                   | `essentials.kickall`           |
+| `/mute <targets>`                              | Prevent the target players from chatting                 | `essentials.mute`              |
+| `/unmute <targets>`                            | Allow the target players to chat again                   | `essentials.unmute`            |
 | `/essentials reload`                           | Reload plugin config                                     | `essentials.reload`            |
 
 ---
