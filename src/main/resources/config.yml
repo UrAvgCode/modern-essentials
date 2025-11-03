@@ -2,6 +2,10 @@
 # Modern Essentials Plugin Configuration
 # =======================================
 
+config:
+  # current plugin version, do not change this
+  version: ${version}
+
 # =========================
 # Server List Options
 # =========================
@@ -104,6 +108,6 @@ command-whitelist:
 commands:
   # List of essentials commands to disable
   # Only applied on server reload or restart
-  disabled:
+  disabled: [ ]
   #  - inventorysee
   #  - enderchest
