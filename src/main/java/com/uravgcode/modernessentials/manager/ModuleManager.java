@@ -11,15 +11,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ModuleManager {
-    private static final List<@NotNull PluginModule> modules = new ArrayList<>();
+    private final List<@NotNull PluginModule> modules;
 
-    private ModuleManager() {
+    public ModuleManager(@NotNull JavaPlugin plugin) {
+        final var logger = plugin.getComponentLogger();
+
+        modules = new ArrayList<>();
+        for (final var clazz : discoverModules()) {
+            try {
+                final var constructor = clazz.getConstructor(JavaPlugin.class);
+                final var module = constructor.newInstance(plugin);
+                modules.add(module);
+            } catch (Exception exception) {
+                logger.warn("Failed to initialize {}: {}", clazz.getSimpleName(), exception.getMessage());
+            }
+        }
+
+        logger.info("Initialized {} modules", modules.size());
     }
 
-    public static List<@NotNull Class<? extends PluginModule>> discoverModules() {
+    public void reloadModules() {
+        modules.forEach(PluginModule::reload);
+    }
+
+    private List<@NotNull Class<? extends PluginModule>> discoverModules() {
         try {
             final var moduleClasses = new ArrayList<Class<? extends PluginModule>>();
-            final var classLoader = ModuleManager.class.getClassLoader();
+            final var classLoader = getClass().getClassLoader();
             final var classPath = ClassPath.from(classLoader);
 
             final var packageName = "com.uravgcode.modernessentials.module";
@@ -38,26 +56,5 @@ public final class ModuleManager {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-    }
-
-    public static void initializeModules(@NotNull JavaPlugin plugin) {
-        final var logger = plugin.getComponentLogger();
-
-        modules.clear();
-        for (final var clazz : discoverModules()) {
-            try {
-                final var constructor = clazz.getConstructor(JavaPlugin.class);
-                final var module = constructor.newInstance(plugin);
-                modules.add(module);
-            } catch (Exception exception) {
-                logger.warn("Failed to initialize {}: {}", clazz.getSimpleName(), exception.getMessage());
-            }
-        }
-
-        logger.info("Initialized {} modules", modules.size());
-    }
-
-    public static void reloadModules() {
-        modules.forEach(PluginModule::reload);
     }
 }

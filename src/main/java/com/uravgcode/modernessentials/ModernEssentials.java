@@ -11,6 +11,9 @@ import java.util.Objects;
 public final class ModernEssentials extends JavaPlugin {
     private static ModernEssentials instance = null;
 
+    private ConfigUpdater configUpdater = null;
+    private ModuleManager moduleManager = null;
+
     public static @NotNull ModernEssentials instance() {
         return Objects.requireNonNull(instance, "plugin not initialized");
     }
@@ -23,14 +26,15 @@ public final class ModernEssentials extends JavaPlugin {
     @Override
     public void onEnable() {
         new UpdateChecker().checkForUpdate(this);
-        new ConfigUpdater(this).updateConfig();
-        ModuleManager.initializeModules(this);
+        configUpdater = new ConfigUpdater(this);
+        moduleManager = new ModuleManager(this);
         reload();
     }
 
     public void reload() {
         saveDefaultConfig();
         reloadConfig();
-        ModuleManager.reloadModules();
+        configUpdater.updateConfig();
+        moduleManager.reloadModules();
     }
 }
