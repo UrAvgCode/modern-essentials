@@ -8,10 +8,7 @@ import com.uravgcode.modernessentials.update.UpdateChecker;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
 @SuppressWarnings("unused")
@@ -31,33 +28,7 @@ public final class EssentialsCommand implements CommandBuilder {
     private int version(CommandContext<CommandSourceStack> context) {
         final var version = new ComparableVersion(ModernEssentials.instance().getPluginMeta().getVersion());
         final var sender = context.getSource().getSender();
-        final var updateChecker = new UpdateChecker();
-
-        sender.sendMessage(Component.text("Checking version, please wait...").decorate(TextDecoration.ITALIC));
-        updateChecker.fetchLatestVersion().thenAccept(latestVersion -> {
-            if (latestVersion.compareTo(version) > 0) {
-                sender.sendMessage(Component.text("modern-essentials version: ")
-                    .append(Component.text(version.toString(), NamedTextColor.GREEN)));
-                sender.sendMessage(Component.text("Latest version: ")
-                    .append(Component.text(latestVersion.toString(), NamedTextColor.GREEN)));
-                sender.sendMessage(Component.text("Download: ")
-                    .append(Component.text("Github", TextColor.color(0x59636e))
-                        .clickEvent(ClickEvent.openUrl("https://github.com/UrAvgCode/modern-essentials/releases/latest")))
-                    .append(Component.text(" Modrinth", TextColor.color(0x1bd96a))
-                        .clickEvent(ClickEvent.openUrl("https://modrinth.com/plugin/modern-essentials/version/latest"))));
-            } else if (latestVersion.compareTo(version) == 0) {
-                sender.sendMessage(Component.text("modern-essentials version: ")
-                    .append(Component.text(version.toString(), NamedTextColor.GREEN)));
-                sender.sendMessage(Component.text("You are running the latest version", NamedTextColor.GREEN));
-            } else {
-                sender.sendMessage(Component.text("modern-essentials version: ")
-                    .append(Component.text(version.toString(), NamedTextColor.GREEN)));
-                sender.sendMessage(Component.text("Latest version: ")
-                    .append(Component.text(latestVersion.toString(), NamedTextColor.GREEN)));
-                sender.sendMessage(Component.text("You are running a newer version than the latest release", NamedTextColor.RED));
-            }
-        });
-
+        new UpdateChecker().sendVersionInfo(sender, version);
         return Command.SINGLE_SUCCESS;
     }
 

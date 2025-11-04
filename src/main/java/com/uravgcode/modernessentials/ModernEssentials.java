@@ -1,6 +1,7 @@
 package com.uravgcode.modernessentials;
 
 import com.uravgcode.modernessentials.manager.ModuleManager;
+import com.uravgcode.modernessentials.update.UpdateChecker;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +26,7 @@ public final class ModernEssentials extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        new UpdateChecker().checkForUpdate(this);
         final var pluginVersion = getPluginMeta().getVersion();
         final var configVersion = getConfig().getString("config.version", "0.0.0");
         if (!pluginVersion.equals(configVersion)) updateConfig();
