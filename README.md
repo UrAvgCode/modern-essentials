@@ -12,7 +12,7 @@ commands and features.
 - **Custom Chat Formatting**
 - **Custom Join and Quit Messages**
 - **Custom Death Messages**
-- **Custom Command Whitelist**
+- **Custom Command Filter**
 
 | MOTD                                | Chat                                | Tab List                          |
 |-------------------------------------|-------------------------------------|-----------------------------------|

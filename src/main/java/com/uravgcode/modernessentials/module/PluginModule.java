@@ -76,6 +76,7 @@ public abstract class PluginModule implements Listener {
             case List<?> list when type == String.class -> list.stream().map(Object::toString).collect(Collectors.joining("\n"));
             case List<?> list when type == Set.class -> Set.copyOf(list);
             case String string when type == List.class -> List.of(string);
+            case String string when type.isEnum() -> Enum.valueOf(type.asSubclass(Enum.class), string.toUpperCase());
             default -> value;
         };
     }

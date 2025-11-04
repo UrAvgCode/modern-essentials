@@ -12,35 +12,40 @@ import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.Set;
 
-@ConfigModule(path = "command-whitelist")
-public final class CommandWhitelistModule extends PluginModule {
-    private static final String permission = "essentials.commandwhitelist.bypass";
+@ConfigModule(path = "command-filter")
+public final class CommandFilterModule extends PluginModule {
+    private enum Mode {
+        WHITELIST,
+        BLACKLIST
+    }
 
-    @ConfigValue(path = "command-whitelist.whitelist")
-    private Set<String> whitelist = Collections.emptySet();
+    @ConfigValue(path = "command-filter.mode")
+    private Mode mode = Mode.BLACKLIST;
 
-    public CommandWhitelistModule(@NotNull JavaPlugin plugin) {
+    @ConfigValue(path = "command-filter.commands")
+    private Set<String> commands = Set.of();
+
+    public CommandFilterModule(@NotNull JavaPlugin plugin) {
         super(plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerCommandSend(PlayerCommandSendEvent event) {
-        if (event.getPlayer().hasPermission(permission)) return;
-        event.getCommands().removeIf(command -> !whitelist.contains(command));
+        if (event.getPlayer().hasPermission("essentials.commandfilter.bypass")) return;
+        event.getCommands().removeIf(command -> (mode == Mode.WHITELIST) != commands.contains(command));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         final var player = event.getPlayer();
-        if (player.hasPermission(permission)) return;
+        if (player.hasPermission("essentials.commandfilter.bypass")) return;
 
         final var message = event.getMessage();
         final var command = message.substring(1);
         final var literal = command.split(" ")[0];
-        if (whitelist.contains(literal)) return;
+        if ((mode == Mode.WHITELIST) == commands.contains(literal)) return;
 
         event.setCancelled(true);
         player.sendMessage(Component.textOfChildren(
