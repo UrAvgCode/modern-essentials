@@ -5,6 +5,7 @@ import com.uravgcode.modernessentials.annotation.ConfigValue;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -34,7 +35,7 @@ public final class CommandFilterModule extends PluginModule {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerCommandSend(PlayerCommandSendEvent event) {
         if (event.getPlayer().hasPermission("essentials.commandfilter.bypass")) return;
-        event.getCommands().removeIf(command -> (mode == Mode.WHITELIST) != commands.contains(command));
+        event.getCommands().removeIf(command -> (mode == Mode.WHITELIST) != commands.contains(getLiteral(command)));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -43,8 +44,7 @@ public final class CommandFilterModule extends PluginModule {
         if (player.hasPermission("essentials.commandfilter.bypass")) return;
 
         final var message = event.getMessage();
-        final var command = message.substring(1);
-        final var literal = command.split(" ")[0];
+        final var literal = getLiteral(message);
         if ((mode == Mode.WHITELIST) == commands.contains(literal)) return;
 
         event.setCancelled(true);
@@ -52,9 +52,18 @@ public final class CommandFilterModule extends PluginModule {
             Component.translatable("command.unknown.command"),
             Component.newline(),
             Component.textOfChildren(
-                Component.text(command),
+                Component.text(message.substring(1))
+                    .decorate(TextDecoration.UNDERLINED),
                 Component.translatable("command.context.here")
             ).clickEvent(ClickEvent.suggestCommand(message))
         ).color(NamedTextColor.RED));
+    }
+
+    private @NotNull String getLiteral(@NotNull String command) {
+        final var colonIndex = command.indexOf(':');
+        final var spaceIndex = command.indexOf(' ');
+        final var start = colonIndex != -1 ? colonIndex + 1 : (command.startsWith("/") ? 1 : 0);
+        final var end = spaceIndex != -1 ? spaceIndex : command.length();
+        return command.substring(start, end);
     }
 }
