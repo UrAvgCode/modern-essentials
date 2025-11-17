@@ -1,13 +1,16 @@
 package com.uravgcode.modernessentials;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import com.uravgcode.modernessentials.manager.ModuleManager;
 import com.uravgcode.modernessentials.update.ConfigUpdater;
 import com.uravgcode.modernessentials.update.UpdateChecker;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+@SuppressWarnings("UnstableApiUsage")
 public final class ModernEssentials extends JavaPlugin {
     private static ModernEssentials instance = null;
 
@@ -20,15 +23,24 @@ public final class ModernEssentials extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        instance = this;
+        ModernEssentials.instance = this;
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().getSettings().checkForUpdates(false);
+        PacketEvents.getAPI().load();
     }
 
     @Override
     public void onEnable() {
+        PacketEvents.getAPI().init();
         new UpdateChecker().checkForUpdate(this);
         configUpdater = new ConfigUpdater(this);
         moduleManager = new ModuleManager(this);
         reload();
+    }
+
+    @Override
+    public void onDisable() {
+        PacketEvents.getAPI().terminate();
     }
 
     public void reload() {

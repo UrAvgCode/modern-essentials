@@ -13,14 +13,20 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
+repositories {
+    maven(uri("https://repo.codemc.io/repository/maven-releases/"))
+}
+
 dependencies {
     paperweight.paperDevBundle(libs.versions.paper.api)
+    compileOnly(libs.packetevents)
     compileOnly(libs.miniplaceholders)
 }
 
 paperPluginYaml {
     main = "com.uravgcode.modernessentials.ModernEssentials"
     bootstrapper = "com.uravgcode.modernessentials.ModernEssentialsBootstrap"
+    loader = "com.uravgcode.modernessentials.ModernEssentialsLoader"
     foliaSupported = true
     apiVersion = "1.21.10"
 
