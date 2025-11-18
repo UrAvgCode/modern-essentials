@@ -92,17 +92,19 @@ public final class FullBrightModule extends PluginModule implements PacketListen
     }
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public void onPacketSend(PacketSendEvent event) {
-        if (!fullBrightPlayers.contains(event.getUser().getUUID())) return;
+        final var uuid = event.getUser().getUUID();
+        if (uuid == null || !fullBrightPlayers.contains(uuid)) return;
 
         switch (event.getPacketType()) {
             case CHUNK_DATA -> {
-                var wrapper = new WrapperPlayServerChunkData(event);
+                final var wrapper = new WrapperPlayServerChunkData(event);
                 wrapper.setLightData(lightData.clone());
                 event.markForReEncode(true);
             }
             case UPDATE_LIGHT -> {
-                var wrapper = new WrapperPlayServerUpdateLight(event);
+                final var wrapper = new WrapperPlayServerUpdateLight(event);
                 wrapper.setLightData(lightData.clone());
                 event.markForReEncode(true);
             }
