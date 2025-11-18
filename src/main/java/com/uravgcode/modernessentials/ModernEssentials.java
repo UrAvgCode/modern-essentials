@@ -25,7 +25,7 @@ public final class ModernEssentials extends JavaPlugin {
     public void onLoad() {
         ModernEssentials.instance = this;
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
-        PacketEvents.getAPI().getSettings().checkForUpdates(false);
+        PacketEvents.getAPI().getSettings().reEncodeByDefault(false).checkForUpdates(false);
         PacketEvents.getAPI().load();
     }
 
