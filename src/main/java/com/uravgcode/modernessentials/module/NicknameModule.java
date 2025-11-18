@@ -9,7 +9,9 @@ import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
 import com.uravgcode.modernessentials.annotation.CommandModule;
 import com.uravgcode.modernessentials.event.NicknameEvent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
@@ -17,6 +19,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.UUID;
@@ -24,15 +27,23 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @CommandModule(name = "nickname")
 public final class NicknameModule extends PluginModule implements PacketListener {
-    private final NamespacedKey nicknameKey;
-    private final Map<UUID, String> nicknames;
+    private static final Map<UUID, String> nicknames = new ConcurrentHashMap<>();
     private final PacketListenerCommon packetListener;
+    private final NamespacedKey nicknameKey;
 
     public NicknameModule(JavaPlugin plugin) {
         super(plugin);
-        this.nicknameKey = new NamespacedKey(plugin, "nickname");
-        this.nicknames = new ConcurrentHashMap<>();
         this.packetListener = this.asAbstract(PacketListenerPriority.HIGH);
+        this.nicknameKey = new NamespacedKey(plugin, "nickname");
+    }
+
+    public static Component nickname(@NotNull Player player) {
+        final var nickname = nicknames.get(player.getUniqueId());
+        if (nickname == null) {
+            return player.name().hoverEvent(player);
+        } else {
+            return Component.text(nickname).hoverEvent(player);
+        }
     }
 
     @Override
@@ -84,7 +95,7 @@ public final class NicknameModule extends PluginModule implements PacketListener
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final var player = event.getPlayer();
         final var dataContainer = player.getPersistentDataContainer();

@@ -42,7 +42,7 @@ tab-list:
   enabled: true
 
   # Format of each player's entry in the tab list
-  format: "<player> <red><health>❤"
+  format: "<nickname> <red><health>❤"
 
   # Header and footer displayed in the tab list
   header:
@@ -65,7 +65,7 @@ chat:
   enabled: true
 
   # Format of chat messages
-  format: "<player_head> <gray><player> <dark_gray>> <white><message>"
+  format: "<player_head> <gray><nickname> <dark_gray>> <white><message>"
 
 # =========================
 # Join & Quit Messages
@@ -75,10 +75,10 @@ join-quit:
   enabled: true
 
   # Custom join message
-  join-message: "<green>+ <player> <gray>Connected"
+  join-message: "<green>+ <nickname> <gray>Connected"
 
   # Custom quit message
-  quit-message: "<red>- <player> <gray>Disconnected"
+  quit-message: "<red>- <nickname> <gray>Disconnected"
 
 # =========================
 # Death Message Formatting

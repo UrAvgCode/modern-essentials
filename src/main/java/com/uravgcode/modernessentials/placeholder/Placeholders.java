@@ -1,5 +1,6 @@
 package com.uravgcode.modernessentials.placeholder;
 
+import com.uravgcode.modernessentials.module.NicknameModule;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.TagPattern;
@@ -30,6 +31,7 @@ public final class Placeholders {
     private static final TagResolver internalAudiencePlaceholders = TagResolver.resolver(
         audiencePlaceholder("player", player -> player.name().hoverEvent(player)),
         audiencePlaceholder("displayname", Player::displayName),
+        audiencePlaceholder("nickname", NicknameModule::nickname),
         audiencePlaceholder("uuid", Player::getUniqueId),
         audiencePlaceholder("ping", Player::getPing),
         audiencePlaceholder("health", player -> Math.round(player.getHealth())),
