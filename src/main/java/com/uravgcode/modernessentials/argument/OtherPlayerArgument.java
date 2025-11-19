@@ -4,10 +4,10 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.uravgcode.modernessentials.exception.BadSourceException;
-import com.uravgcode.modernessentials.exception.CannotTargetSelfException;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
@@ -19,6 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 @NullMarked
 public class OtherPlayerArgument implements CustomArgumentType<Player, PlayerSelectorArgumentResolver> {
+    private static final SimpleCommandExceptionType INVALID_TARGET = new SimpleCommandExceptionType(() -> "You cannot target yourself");
 
     @Override
     public Player parse(StringReader reader) {
@@ -31,7 +32,7 @@ public class OtherPlayerArgument implements CustomArgumentType<Player, PlayerSel
 
         final var sender = stack.getSender();
         final var player = getNativeType().parse(reader).resolve(stack).getFirst();
-        if (player.equals(sender)) throw new CannotTargetSelfException();
+        if (player.equals(sender)) throw INVALID_TARGET.create();
 
         return player;
     }

@@ -14,12 +14,12 @@ import java.util.concurrent.CompletableFuture;
 
 @NullMarked
 public final class TpaPlayerArgument extends OtherPlayerArgument {
-    private final SimpleCommandExceptionType invalidTargetExceptionType = new SimpleCommandExceptionType(() -> "Target cannot accept teleport requests");
+    private static final SimpleCommandExceptionType INVALID_TARGET = new SimpleCommandExceptionType(() -> "Target cannot accept teleport requests");
 
     @Override
     public <S> Player parse(StringReader reader, S source) throws CommandSyntaxException {
         final var target = super.parse(reader, source);
-        if (!target.hasPermission("essentials.tpa.accept")) throw invalidTargetExceptionType.create();
+        if (!target.hasPermission("essentials.tpa.accept")) throw INVALID_TARGET.create();
         return target;
     }
 
