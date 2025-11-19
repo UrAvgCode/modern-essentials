@@ -4,7 +4,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.uravgcode.modernessentials.argument.OtherPlayerArgument;
+import com.uravgcode.modernessentials.argument.TpaPlayerArgument;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
@@ -22,7 +22,7 @@ public final class TpaCommand implements CommandBuilder {
     public LiteralCommandNode<CommandSourceStack> build() {
         return Commands.literal("tpa")
             .requires(permission("essentials.tpa"))
-            .then(Commands.argument("target", new OtherPlayerArgument())
+            .then(Commands.argument("target", new TpaPlayerArgument())
                 .executes(this::execute))
             .build();
     }

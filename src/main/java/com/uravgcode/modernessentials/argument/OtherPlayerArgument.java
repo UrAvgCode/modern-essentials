@@ -18,7 +18,7 @@ import org.jspecify.annotations.NullMarked;
 import java.util.concurrent.CompletableFuture;
 
 @NullMarked
-public final class OtherPlayerArgument implements CustomArgumentType<Player, PlayerSelectorArgumentResolver> {
+public class OtherPlayerArgument implements CustomArgumentType<Player, PlayerSelectorArgumentResolver> {
 
     @Override
     public Player parse(StringReader reader) {
