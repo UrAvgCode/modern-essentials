@@ -38,7 +38,7 @@ public final class CommandFilterModule extends PluginModule {
         event.getCommands().removeIf(command -> (mode == Mode.WHITELIST) != commands.contains(getLiteral(command)));
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         final var player = event.getPlayer();
         if (player.hasPermission("essentials.commandfilter.bypass")) return;
@@ -60,10 +60,10 @@ public final class CommandFilterModule extends PluginModule {
     }
 
     private @NotNull String getLiteral(@NotNull String command) {
-        final var colonIndex = command.indexOf(':');
         final var spaceIndex = command.indexOf(' ');
-        final var start = colonIndex != -1 ? colonIndex + 1 : (command.startsWith("/") ? 1 : 0);
         final var end = spaceIndex != -1 ? spaceIndex : command.length();
+        final var colonIndex = command.indexOf(':');
+        final var start = colonIndex != -1 && colonIndex < end ? colonIndex + 1 : (command.startsWith("/") ? 1 : 0);
         return command.substring(start, end);
     }
 }
