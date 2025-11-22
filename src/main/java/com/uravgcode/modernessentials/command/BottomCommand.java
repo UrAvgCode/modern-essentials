@@ -39,7 +39,7 @@ public final class BottomCommand implements CommandBuilder {
             break;
         }
 
-        player.teleport(location);
+        player.teleportAsync(location);
         return Command.SINGLE_SUCCESS;
     }
 }

@@ -24,7 +24,7 @@ public final class TopCommand implements CommandBuilder {
         final var top = location.getWorld().getHighestBlockYAt(location);
 
         location.setY(top + 1);
-        player.teleport(location);
+        player.teleportAsync(location);
         return Command.SINGLE_SUCCESS;
     }
 }

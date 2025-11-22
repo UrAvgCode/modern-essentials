@@ -42,7 +42,7 @@ public final class TpaCommand implements CommandBuilder {
             Component.text("[Accept]", NamedTextColor.GREEN)
                 .clickEvent(ClickEvent.callback(audience -> {
                     final var teleportMessage = Component.translatable("commands.teleport.success.entity.single", player.name(), target.name());
-                    player.teleport(target);
+                    player.teleportAsync(target.getLocation());
                     player.sendMessage(teleportMessage);
                     target.sendMessage(teleportMessage);
                 }, options))
