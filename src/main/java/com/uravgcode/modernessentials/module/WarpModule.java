@@ -1,13 +1,9 @@
 package com.uravgcode.modernessentials.module;
 
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.suggestion.Suggestions;
-import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.uravgcode.modernessentials.annotation.CommandModule;
 import com.uravgcode.modernessentials.event.warp.DelWarpEvent;
 import com.uravgcode.modernessentials.event.warp.SetWarpEvent;
 import com.uravgcode.modernessentials.event.warp.WarpEvent;
-import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -19,13 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.NavigableMap;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 @CommandModule(name = "warp")
 public final class WarpModule extends PluginModule {
-    private static final TreeMap<String, Location> warps = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private static final ConcurrentNavigableMap<String, Location> warps = new ConcurrentSkipListMap<>(String.CASE_INSENSITIVE_ORDER);
     private final File file;
 
     public WarpModule(@NotNull JavaPlugin plugin) {
@@ -33,13 +32,8 @@ public final class WarpModule extends PluginModule {
         this.file = plugin.getDataPath().resolve("warps.yml").toFile();
     }
 
-    public static CompletableFuture<Suggestions> suggestions(CommandContext<CommandSourceStack> ignored, SuggestionsBuilder builder) {
-        final var remaining = builder.getRemainingLowerCase();
-        for (final var warp : warps.tailMap(remaining).keySet()) {
-            if (!warp.toLowerCase().startsWith(remaining)) break;
-            builder.suggest(warp);
-        }
-        return builder.buildFuture();
+    public static NavigableMap<String, Location> getWarps() {
+        return Collections.unmodifiableNavigableMap(warps);
     }
 
     @Override
@@ -60,7 +54,7 @@ public final class WarpModule extends PluginModule {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onWarp(WarpEvent event) {
         final var name = event.getName();
         final var player = event.getPlayer();
@@ -73,7 +67,7 @@ public final class WarpModule extends PluginModule {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onSetWarp(SetWarpEvent event) {
         final var name = event.getName();
         final var player = event.getPlayer();
@@ -88,7 +82,7 @@ public final class WarpModule extends PluginModule {
         saveWarps();
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onDelWarp(DelWarpEvent event) {
         final var name = event.getName();
         final var sender = event.getSender();
