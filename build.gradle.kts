@@ -28,7 +28,7 @@ paperPluginYaml {
     bootstrapper = "com.uravgcode.modernessentials.ModernEssentialsBootstrap"
     loader = "com.uravgcode.modernessentials.ModernEssentialsLoader"
     foliaSupported = true
-    apiVersion = "1.21.10"
+    apiVersion = "1.21.11"
 
     name = "modern-essentials"
     description = "a modern essentials plugin"
@@ -62,6 +62,6 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.21.10")
+        minecraftVersion("1.21.11")
     }
 }
