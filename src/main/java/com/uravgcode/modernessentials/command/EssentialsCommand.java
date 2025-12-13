@@ -9,7 +9,6 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.apache.maven.artifact.versioning.ComparableVersion;
 
 @SuppressWarnings("unused")
 public final class EssentialsCommand implements CommandBuilder {
@@ -26,9 +25,8 @@ public final class EssentialsCommand implements CommandBuilder {
     }
 
     private int version(CommandContext<CommandSourceStack> context) {
-        final var version = new ComparableVersion(ModernEssentials.instance().getPluginMeta().getVersion());
         final var sender = context.getSource().getSender();
-        new UpdateChecker().sendVersionInfo(sender, version);
+        new UpdateChecker(ModernEssentials.instance()).sendVersionInfo(sender);
         return Command.SINGLE_SUCCESS;
     }
 

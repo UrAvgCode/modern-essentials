@@ -32,7 +32,7 @@ public final class ModernEssentials extends JavaPlugin {
     @Override
     public void onEnable() {
         PacketEvents.getAPI().init();
-        new UpdateChecker().checkForUpdate(this);
+        new UpdateChecker(this).checkForUpdate();
         configUpdater = new ConfigUpdater(this);
         moduleManager = new ModuleManager(this);
         reload();
