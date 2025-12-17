@@ -25,6 +25,8 @@ public final class JumpCommand implements CommandBuilder {
         final var block = player.getTargetBlockExact(300);
         if (block != null) {
             final var location = block.getLocation();
+            location.setYaw(player.getYaw());
+            location.setPitch(player.getPitch());
             location.add(0, 1, 0);
             player.teleportAsync(location, TeleportCause.COMMAND);
         }
