@@ -6,6 +6,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 @SuppressWarnings("unused")
 public final class JumpCommand implements CommandBuilder {
@@ -25,7 +26,7 @@ public final class JumpCommand implements CommandBuilder {
         if (block != null) {
             final var location = block.getLocation();
             location.add(0, 1, 0);
-            player.teleportAsync(location);
+            player.teleportAsync(location, TeleportCause.COMMAND);
         }
 
         return Command.SINGLE_SUCCESS;

@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -61,7 +62,7 @@ public final class WarpModule extends PluginModule {
         final var location = warps.get(name);
 
         if (location != null) {
-            player.teleportAsync(location);
+            player.teleportAsync(location, TeleportCause.COMMAND);
         } else {
             player.sendMessage(Component.text("Warp not found", NamedTextColor.RED));
         }

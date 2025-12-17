@@ -9,6 +9,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import net.kyori.adventure.text.Component;
 import org.bukkit.World;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 @SuppressWarnings("unused")
 public final class WorldCommand implements CommandBuilder {
@@ -39,7 +40,7 @@ public final class WorldCommand implements CommandBuilder {
             location.setZ(location.getZ() / 8.0);
         }
 
-        player.teleportAsync(location);
+        player.teleportAsync(location, TeleportCause.COMMAND);
         player.sendMessage(Component.translatable(
             "commands.teleport.success.entity.single",
             player.name(),

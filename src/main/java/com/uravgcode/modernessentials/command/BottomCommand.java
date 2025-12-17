@@ -6,6 +6,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 @SuppressWarnings("unused")
 public final class BottomCommand implements CommandBuilder {
@@ -39,7 +40,7 @@ public final class BottomCommand implements CommandBuilder {
             break;
         }
 
-        player.teleportAsync(location);
+        player.teleportAsync(location, TeleportCause.COMMAND);
         return Command.SINGLE_SUCCESS;
     }
 }

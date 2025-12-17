@@ -12,6 +12,7 @@ import net.kyori.adventure.text.event.ClickCallback;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import java.time.Duration;
 
@@ -42,7 +43,7 @@ public final class TpaCommand implements CommandBuilder {
             Component.text("[Accept]", NamedTextColor.GREEN)
                 .clickEvent(ClickEvent.callback(audience -> {
                     final var teleportMessage = Component.translatable("commands.teleport.success.entity.single", player.name(), target.name());
-                    player.teleportAsync(target.getLocation());
+                    player.teleportAsync(target.getLocation(), TeleportCause.COMMAND);
                     player.sendMessage(teleportMessage);
                     target.sendMessage(teleportMessage);
                 }, options))

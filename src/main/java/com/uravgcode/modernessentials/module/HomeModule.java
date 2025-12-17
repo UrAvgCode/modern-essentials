@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jspecify.annotations.NullMarked;
 
@@ -86,7 +87,7 @@ public final class HomeModule extends PluginModule {
 
         final var location = playerHomes.get(name);
         if (location != null) {
-            player.teleportAsync(location);
+            player.teleportAsync(location, TeleportCause.COMMAND);
         } else {
             player.sendMessage(Component.text("Home not found", NamedTextColor.RED));
         }
