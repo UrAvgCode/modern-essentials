@@ -115,3 +115,10 @@ commands:
   disabled: [ ]
   #  - inventorysee
   #  - enderchest
+
+# =========================
+# Homes
+# =========================
+homes:
+  # Default maximum homes per player
+  default-limit: 3

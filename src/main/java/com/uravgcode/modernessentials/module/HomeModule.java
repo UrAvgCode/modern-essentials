@@ -1,6 +1,7 @@
 package com.uravgcode.modernessentials.module;
 
 import com.uravgcode.modernessentials.annotation.CommandModule;
+import com.uravgcode.modernessentials.annotation.ConfigValue;
 import com.uravgcode.modernessentials.event.home.DelHomeEvent;
 import com.uravgcode.modernessentials.event.home.HomeEvent;
 import com.uravgcode.modernessentials.event.home.SetHomeEvent;
@@ -29,6 +30,9 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public final class HomeModule extends PluginModule {
     private static final Map<UUID, NavigableMap<String, Location>> homes = new ConcurrentHashMap<>();
     private final File file;
+
+    @ConfigValue(path = "homes.default-limit")
+    private int defaultLimit = 3;
 
     public HomeModule(JavaPlugin plugin) {
         super(plugin);
@@ -100,6 +104,11 @@ public final class HomeModule extends PluginModule {
         final var location = player.getLocation();
 
         final var playerHomes = homes.computeIfAbsent(player.getUniqueId(), uuid -> new ConcurrentSkipListMap<>(String.CASE_INSENSITIVE_ORDER));
+        if (playerHomes.size() >= defaultLimit && !playerHomes.containsKey(name)) {
+            player.sendMessage(Component.text("Home limit reached",  NamedTextColor.RED));
+            return;
+        }
+
         if (playerHomes.put(name, location) == null) {
             player.sendMessage("Home created");
         } else {
