@@ -40,6 +40,12 @@ paperPluginYaml {
         required = false
         joinClasspath = true
     }
+
+    dependencies.server.register("ViaVersion") {
+        load = Load.AFTER
+        required = false
+        joinClasspath = false
+    }
 }
 
 runPaper {
