@@ -16,7 +16,7 @@ public final class ModernEssentialsLoader implements PluginLoader {
     public void classloader(PluginClasspathBuilder classpathBuilder) {
         final var resolver = new MavenLibraryResolver();
         resolver.addRepository(new RemoteRepository.Builder("codemc-releases", "default", "https://repo.codemc.io/repository/maven-releases/").build());
-        resolver.addDependency(new Dependency(new DefaultArtifact("com.github.retrooper:packetevents-spigot:2.11.0"), null));
+        resolver.addDependency(new Dependency(new DefaultArtifact("com.github.retrooper:packetevents-spigot:2.11.1"), null));
         classpathBuilder.addLibrary(resolver);
     }
 }
