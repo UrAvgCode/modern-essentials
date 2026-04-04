@@ -24,14 +24,23 @@ public final class ModernEssentials extends JavaPlugin {
     @Override
     public void onLoad() {
         ModernEssentials.instance = this;
-        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
-        PacketEvents.getAPI().getSettings().reEncodeByDefault(false).checkForUpdates(false);
-        PacketEvents.getAPI().load();
+        try {
+            PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+            PacketEvents.getAPI().getSettings().reEncodeByDefault(false).checkForUpdates(false);
+            PacketEvents.getAPI().load();
+        } catch (Exception exception) {
+            getComponentLogger().error("Failed to load PacketEvents API: {}", exception.getMessage());
+        }
     }
 
     @Override
     public void onEnable() {
-        PacketEvents.getAPI().init();
+        try {
+            PacketEvents.getAPI().init();
+        } catch (Exception exception) {
+            getComponentLogger().error("Failed to initialize PacketEvents API: {}", exception.getMessage());
+        }
+
         new UpdateChecker(this).checkForUpdate();
         configUpdater = new ConfigUpdater(this);
         moduleManager = new ModuleManager(this);
@@ -40,7 +49,11 @@ public final class ModernEssentials extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        PacketEvents.getAPI().terminate();
+        try {
+            PacketEvents.getAPI().terminate();
+        } catch (Exception exception) {
+            getComponentLogger().error("Failed to terminate PacketEvents API: {}", exception.getMessage());
+        }
     }
 
     public void reload() {
