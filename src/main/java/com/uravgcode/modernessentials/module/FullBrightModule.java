@@ -150,8 +150,8 @@ public final class FullBrightModule extends PluginModule implements PacketListen
         if (!(player instanceof CraftPlayer craftPlayer && player.getWorld() instanceof CraftWorld craftWorld)) return;
         final var lightEngine = craftWorld.getHandle().getLightEngine();
 
-        for (final var chunkKey : player.getSentChunkKeys()) {
-            final var chunkPosition = new ChunkPos(chunkKey);
+        for (final var chunk : player.getSentChunks()) {
+            final var chunkPosition = new ChunkPos(chunk.getX(), chunk.getZ());
             final var packet = new ClientboundLightUpdatePacket(chunkPosition, lightEngine, null, null);
             craftPlayer.getHandle().connection.send(packet);
         }
