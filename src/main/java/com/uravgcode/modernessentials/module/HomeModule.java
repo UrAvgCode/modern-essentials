@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -103,9 +104,11 @@ public final class HomeModule extends PluginModule {
         final var name = event.getName();
         final var location = player.getLocation();
 
-        final var playerHomes = homes.computeIfAbsent(player.getUniqueId(), uuid -> new ConcurrentSkipListMap<>(String.CASE_INSENSITIVE_ORDER));
-        if (playerHomes.size() >= defaultLimit && !playerHomes.containsKey(name)) {
-            player.sendMessage(Component.text("Home limit reached",  NamedTextColor.RED));
+        final var playerHomes = homes.computeIfAbsent(player.getUniqueId(), _ -> new ConcurrentSkipListMap<>(String.CASE_INSENSITIVE_ORDER));
+        final var homeLimit = getHomeLimit(player);
+
+        if (homeLimit != -1 && playerHomes.size() >= homeLimit && !playerHomes.containsKey(name)) {
+            player.sendMessage(Component.text("Home limit reached", NamedTextColor.RED));
             return;
         }
 
@@ -146,5 +149,34 @@ public final class HomeModule extends PluginModule {
                 plugin.getComponentLogger().error("Could not save homes.yml", exception);
             }
         });
+    }
+
+    private int getHomeLimit(Player player) {
+        final var prefix = "essentials.home.limit.";
+
+        if (player.isOp() || player.hasPermission(prefix + "unlimited")) {
+            return -1;
+        }
+
+        Integer limit = null;
+
+        for (final var permission : player.getEffectivePermissions()) {
+            if (!permission.getValue()) {
+                continue;
+            }
+
+            final var name = permission.getPermission();
+            if (!name.startsWith(prefix)) {
+                continue;
+            }
+
+            try {
+                final int value = Integer.parseInt(name.substring(prefix.length()));
+                limit = limit == null ? value : Math.max(limit, value);
+            } catch (NumberFormatException _) {
+            }
+        }
+
+        return limit != null ? limit : defaultLimit;
     }
 }

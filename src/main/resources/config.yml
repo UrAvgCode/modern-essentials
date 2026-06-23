@@ -121,4 +121,7 @@ commands:
 # =========================
 homes:
   # Default maximum homes per player
+  # Override with permissions:
+  #   essentials.home.limit.<number>
+  #   essentials.home.limit.unlimited
   default-limit: 3
