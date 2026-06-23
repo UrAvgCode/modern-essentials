@@ -27,11 +27,16 @@ commands and features.
 | `/warp <name>`                                 | Teleport to the specified warp                                                    | `essentials.warp`              |
 | `/setwarp <name>`                              | Create a new warp                                                                 | `essentials.setwarp`           |
 | `/delwarp <name>`                              | Delete an existing warp                                                           | `essentials.delwarp`           |
+| `/home <name>`                                 | Teleport to the specified home                                                    | `essentials.home`              |
+| `/sethome <name>`                              | Create or update a home                                                           | `essentials.sethome`           |
+| `/delhome <name>`                              | Delete an existing home                                                           | `essentials.delhome`           |
 | `/tpa <target>`                                | Send a teleport request to a player (requires `essentials.tpa.accept` permission) | `essentials.tpa`               |
+| `/spawn`                                       | Teleport to the server spawn                                                      | `essentials.spawn`             |
 | `/world <world>`                               | Teleport to another world                                                         | `essentials.world`             |
 | `/jump`                                        | Jump to the nearest block in your line of sight                                   | `essentials.jump`              |
 | `/top`                                         | Teleport to the highest block at your location                                    | `essentials.top`               |
 | `/bottom`                                      | Teleport to the lowest safe block at your location                                | `essentials.bottom`            |
+| `/back`                                        | Return to your previous location before teleporting (doesn't work on folia)       | `essentials.back`              |
 | `/fly`                                         | Toggle flight mode                                                                | `essentials.fly`               |
 | `/god`                                         | Enable invincibility                                                              | `essentials.god`               |
 | `/vanish`                                      | Become invisible to other players                                                 | `essentials.vanish`            |
