@@ -17,13 +17,13 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import java.time.Duration;
 
 @SuppressWarnings("unused")
-public final class TpaCommand implements CommandBuilder {
+public final class TpaHereCommand implements CommandBuilder {
 
     @Override
     public LiteralCommandNode<CommandSourceStack> build() {
-        return Commands.literal("tpa")
-            .requires(permission("essentials.tpa"))
-            .then(Commands.argument("target", new TeleportRequestPlayerArgument("essentials.tpa.accept"))
+        return Commands.literal("tpahere")
+            .requires(permission("essentials.tpahere"))
+            .then(Commands.argument("target", new TeleportRequestPlayerArgument("essentials.tpahere.accept"))
                 .executes(this::execute))
             .build();
     }
@@ -39,15 +39,15 @@ public final class TpaCommand implements CommandBuilder {
 
         final var message = Component.textOfChildren(
             player.name(),
-            Component.text(" has requested to teleport to you "),
+            Component.text(" has requested that you teleport to them "),
             Component.text("[Accept]", NamedTextColor.GREEN)
                 .clickEvent(ClickEvent.callback(audience -> {
-                    final var teleportMessage = Component.translatable("commands.teleport.success.entity.single", player.name(), target.name());
-                    player.teleportAsync(target.getLocation(), TeleportCause.COMMAND);
+                    final var teleportMessage = Component.translatable("commands.teleport.success.entity.single", target.name(), player.name());
+                    target.teleportAsync(player.getLocation(), TeleportCause.COMMAND);
                     player.sendMessage(teleportMessage);
                     target.sendMessage(teleportMessage);
                 }, options))
-                .hoverEvent(Component.translatable("Click to accept")),
+                .hoverEvent(Component.text("Click to accept")),
             Component.newline(),
             Component.text("This request will expire in 60 seconds", NamedTextColor.GRAY)
         );

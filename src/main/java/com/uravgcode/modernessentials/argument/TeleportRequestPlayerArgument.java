@@ -13,13 +13,19 @@ import org.jspecify.annotations.NullMarked;
 import java.util.concurrent.CompletableFuture;
 
 @NullMarked
-public final class TpaPlayerArgument extends OtherPlayerArgument {
-    private static final SimpleCommandExceptionType INVALID_TARGET = new SimpleCommandExceptionType(() -> "Target cannot accept teleport requests");
+public final class TeleportRequestPlayerArgument extends OtherPlayerArgument {
+    private static final SimpleCommandExceptionType INVALID_TARGET = new SimpleCommandExceptionType(() -> "Target cannot accept this teleport request");
+
+    private final String permission;
+
+    public TeleportRequestPlayerArgument(String permission) {
+        this.permission = permission;
+    }
 
     @Override
     public <S> Player parse(StringReader reader, S source) throws CommandSyntaxException {
         final var target = super.parse(reader, source);
-        if (!target.hasPermission("essentials.tpa.accept")) throw INVALID_TARGET.create();
+        if (!target.hasPermission(permission)) throw INVALID_TARGET.create();
         return target;
     }
 
@@ -28,7 +34,7 @@ public final class TpaPlayerArgument extends OtherPlayerArgument {
         return super.listSuggestions(context, builder).thenApply(suggestions -> {
             suggestions.getList().removeIf(suggestion -> {
                 final var player = Bukkit.getPlayerExact(suggestion.getText());
-                return player != null && !player.hasPermission("essentials.tpa.accept");
+                return player != null && !player.hasPermission(permission);
             });
             return suggestions;
         });
