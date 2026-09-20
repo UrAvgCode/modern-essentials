@@ -47,7 +47,7 @@ public final class TpaCommand implements CommandBuilder {
                     player.sendMessage(teleportMessage);
                     target.sendMessage(teleportMessage);
                 }, options))
-                .hoverEvent(Component.translatable("Click to accept")),
+                .hoverEvent(Component.text("Click to accept")),
             Component.newline(),
             Component.text("This request will expire in 60 seconds", NamedTextColor.GRAY)
         );

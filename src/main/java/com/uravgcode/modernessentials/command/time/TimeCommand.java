@@ -8,11 +8,12 @@ import com.uravgcode.modernessentials.command.CommandBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class TimeCommand implements CommandBuilder {
-    protected final String name;
-    protected final long time;
+    private final String name;
+    private final long time;
 
     protected TimeCommand(@NotNull String name, long time) {
         this.name = name;
@@ -35,8 +36,14 @@ public abstract class TimeCommand implements CommandBuilder {
         final var executor = context.getSource().getExecutor();
         final var world = executor != null ? executor.getWorld() : server.getRespawnWorld();
 
-        sender.sendMessage(Component.translatable("commands.time.set", Component.text(time)));
-        server.getGlobalRegionScheduler().execute(plugin, () -> world.setTime(time));
+        server.getGlobalRegionScheduler().execute(plugin, () -> {
+            try {
+                world.setTime(time);
+                sender.sendMessage(Component.translatable("commands.time.set.time_marker", Component.text(world.getKey().asString()), Component.text("minecraft:" + name)));
+            } catch (IllegalArgumentException _) {
+                sender.sendMessage(Component.translatable("commands.time.no_default_clock", Component.text(world.getKey().asString())).color(NamedTextColor.RED));
+            }
+        });
 
         return Command.SINGLE_SUCCESS;
     }
