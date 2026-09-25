@@ -89,7 +89,7 @@ public final class UpdateChecker {
                     audience.sendMessage(Component.text("You are running a newer version than the latest release", NamedTextColor.RED));
                 }
             })
-            .exceptionally(throwable -> {
+            .exceptionally(_ -> {
                 audience.sendMessage(Component.text("modern-essentials version: ")
                     .append(Component.text(version.toString(), NamedTextColor.GREEN)));
                 audience.sendMessage(Component.text("Failed to fetch latest version", NamedTextColor.RED));

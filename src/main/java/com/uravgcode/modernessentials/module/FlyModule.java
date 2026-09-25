@@ -58,7 +58,7 @@ public final class FlyModule extends PluginModule {
 
     @SuppressWarnings("deprecation")
     private void enableFlight(@NotNull final Player player) {
-        player.getScheduler().run(plugin, task -> {
+        player.getScheduler().run(plugin, _ -> {
             player.setAllowFlight(true);
             if (player.isOnGround()) return;
             player.setFlying(true);

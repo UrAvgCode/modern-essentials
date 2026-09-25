@@ -30,7 +30,7 @@ public final class ChatModule extends PluginModule {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onChat(AsyncChatEvent event) {
-        event.renderer((player, playerName, message, viewer) ->
+        event.renderer((player, _, message, _) ->
             miniMessage.deserialize(format, player, Placeholder.component("message", message))
         );
     }

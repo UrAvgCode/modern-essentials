@@ -33,7 +33,7 @@ public final class BackModule extends PluginModule {
         final var player = event.getPlayer();
         final var uuid = player.getUniqueId();
 
-        var deque = locations.computeIfAbsent(uuid, id -> new ArrayDeque<>());
+        var deque = locations.computeIfAbsent(uuid, _ -> new ArrayDeque<>());
         deque.push(event.getFrom().clone());
 
         if (deque.size() > 10) {

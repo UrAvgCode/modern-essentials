@@ -145,7 +145,6 @@ public final class FullBrightModule extends PluginModule implements PacketListen
         fullBrightPlayers.remove(event.getPlayer().getUniqueId());
     }
 
-    @SuppressWarnings("UnstableApiUsage")
     private void sendLightUpdates(Player player) {
         if (!(player instanceof CraftPlayer craftPlayer && player.getWorld() instanceof CraftWorld craftWorld)) return;
         final var lightEngine = craftWorld.getHandle().getLightEngine();

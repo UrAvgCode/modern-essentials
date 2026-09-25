@@ -62,11 +62,11 @@ public final class Placeholders {
     }
 
     private static TagResolver globalPlaceholder(@TagPattern @NotNull String name, @NotNull Supplier<Component> supplier) {
-        return TagResolver.resolver(name, (arguments, context) -> Tag.selfClosingInserting(supplier.get()));
+        return TagResolver.resolver(name, (_, _) -> Tag.selfClosingInserting(supplier.get()));
     }
 
     private static TagResolver audiencePlaceholder(@TagPattern @NotNull String name, @NotNull Function<Player, ?> handler) {
-        return TagResolver.resolver(name, (arguments, context) -> {
+        return TagResolver.resolver(name, (_, context) -> {
             final var player = context.targetAsType(Player.class);
             final var result = handler.apply(player);
             final var content = result instanceof Component component
