@@ -80,7 +80,9 @@ public final class UpdateChecker {
                         .append(Component.text("Github", TextColor.color(0x59636e))
                             .clickEvent(ClickEvent.openUrl("https://github.com/UrAvgCode/modern-essentials/releases")))
                         .append(Component.text(" Modrinth", TextColor.color(0x1bd96a))
-                            .clickEvent(ClickEvent.openUrl("https://modrinth.com/plugin/modern-essentials/version/latest"))));
+                            .clickEvent(ClickEvent.openUrl("https://modrinth.com/plugin/modern-essentials")))
+                        .append(Component.text(" Hangar", TextColor.color(0x2f4476))
+                            .clickEvent(ClickEvent.openUrl("https://hangar.papermc.io/UrAvgCode/modern-essentials"))));
                 } else {
                     audience.sendMessage(Component.text("Latest version: ")
                         .append(Component.text(latestVersion.toString(), NamedTextColor.GREEN)));
