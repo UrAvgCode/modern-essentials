@@ -91,6 +91,27 @@ death-message:
   format: "<gray>☠ <white><message>"
 
 # =========================
+# Server Links
+# =========================
+server-links:
+  # Enables server links module
+  enabled: true
+
+  # Links shown in the pause menu under "Server Links"
+  # Use either name or type for a built-in label:
+  # REPORT_BUG, COMMUNITY_GUIDELINES, SUPPORT, STATUS, FEEDBACK,
+  # COMMUNITY, WEBSITE, FORUMS, NEWS, ANNOUNCEMENTS
+  links:
+    - name: "<#5865f2>Discord"
+      url: "https://discord.gg/example"
+    - name: "<player>'s NameMC Profile"
+      url: "https://namemc.com/profile/<uuid>"
+    - type: WEBSITE
+      url: "https://modrinth.com/plugin/modern-essentials"
+    - type: REPORT_BUG
+      url: "https://github.com/UrAvgCode/modern-essentials/issues"
+
+# =========================
 # Command Filter
 # =========================
 command-filter:
