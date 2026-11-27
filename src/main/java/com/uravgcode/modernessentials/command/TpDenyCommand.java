@@ -4,18 +4,15 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.uravgcode.modernessentials.teleport.TeleportRequests;
+import com.uravgcode.modernessentials.event.teleport.TeleportResponseEvent;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
-// same as tpaccept but for saying no
 @NullMarked
 @SuppressWarnings("unused")
 public final class TpDenyCommand implements CommandBuilder {
@@ -32,13 +29,9 @@ public final class TpDenyCommand implements CommandBuilder {
             .build();
     }
 
-    // no player given = deny the newest request
     private int execute(CommandContext<CommandSourceStack> context, @Nullable Player sender) throws CommandSyntaxException {
         final var player = player(context);
-        if (!TeleportRequests.deny(player, sender)) {
-            player.sendMessage(Component.text("You don't have any pending teleport requests", NamedTextColor.RED));
-            return 0;
-        }
+        player.getServer().getPluginManager().callEvent(new TeleportResponseEvent(player, sender, TeleportResponseEvent.Type.DENY));
         return Command.SINGLE_SUCCESS;
     }
 }
