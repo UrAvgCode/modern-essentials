@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.uravgcode.modernessentials.argument.TeleportRequestPlayerArgument;
+import com.uravgcode.modernessentials.teleport.TeleportRequests;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
@@ -12,9 +13,6 @@ import net.kyori.adventure.text.event.ClickCallback;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-
-import java.time.Duration;
 
 @SuppressWarnings("unused")
 public final class TpaCommand implements CommandBuilder {
@@ -32,8 +30,10 @@ public final class TpaCommand implements CommandBuilder {
         final var player = player(context);
         final var target = context.getArgument("target", Player.class);
 
+        TeleportRequests.add(player, target, TeleportRequests.Type.TPA);
+
         final var options = ClickCallback.Options.builder()
-            .lifetime(Duration.ofSeconds(60))
+            .lifetime(TeleportRequests.LIFETIME)
             .uses(1)
             .build();
 
@@ -41,13 +41,18 @@ public final class TpaCommand implements CommandBuilder {
             player.name(),
             Component.text(" has requested to teleport to you "),
             Component.text("[Accept]", NamedTextColor.GREEN)
-                .clickEvent(ClickEvent.callback(audience -> {
-                    final var teleportMessage = Component.translatable("commands.teleport.success.entity.single", player.name(), target.name());
-                    player.teleportAsync(target.getLocation(), TeleportCause.COMMAND);
-                    player.sendMessage(teleportMessage);
-                    target.sendMessage(teleportMessage);
+                .clickEvent(ClickEvent.callback(_ -> {
+                    if (!TeleportRequests.accept(target, player)) {
+                        target.sendMessage(Component.text("This request already expired", NamedTextColor.RED));
+                    }
                 }, options))
                 .hoverEvent(Component.text("Click to accept")),
+            Component.text(" "),
+            Component.text("[Deny]", NamedTextColor.RED)
+                .clickEvent(ClickEvent.callback(_ -> TeleportRequests.deny(target, player), options))
+                .hoverEvent(Component.text("Click to deny")),
+            Component.newline(),
+            Component.text("You can also type /tpaccept or /tpdeny", NamedTextColor.GRAY),
             Component.newline(),
             Component.text("This request will expire in 60 seconds", NamedTextColor.GRAY)
         );

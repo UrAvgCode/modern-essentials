@@ -32,6 +32,8 @@ commands and features.
 | `/delhome <name>`                              | Delete an existing home                                                                     | `essentials.delhome`           |
 | `/tpa <target>`                                | Request to teleport to another player (requires `essentials.tpa.accept` permission)         | `essentials.tpa`               |
 | `/tpahere <target>`                            | Request another player to teleport to you (requires `essentials.tpahere.accept` permission) | `essentials.tpahere`           |
+| `/tpaccept [player]`                           | Accept a pending teleport request (newest one if no player is given)                        | `essentials.tpa.accept`        |
+| `/tpdeny [player]`                             | Deny a pending teleport request (newest one if no player is given)                          | `essentials.tpa.accept`        |
 | `/spawn`                                       | Teleport to the server spawn                                                                | `essentials.spawn`             |
 | `/world <world>`                               | Teleport to another world                                                                   | `essentials.world`             |
 | `/jump`                                        | Jump to the nearest block in your line of sight                                             | `essentials.jump`              |
